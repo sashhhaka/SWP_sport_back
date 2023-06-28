@@ -12,7 +12,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env.test
+      - .env
 
   db:
     image: db
@@ -21,4 +21,4 @@ services:
       dockerfile: Dockerfile.db
     restart: always
     env_file:
-      - .env.test
+      - .env

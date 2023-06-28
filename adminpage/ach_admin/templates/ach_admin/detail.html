@@ -1,0 +1,42 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+</head>
+
+
+<button class="my-button" onclick="location.href = '/second_admin'">Admin panel</button>
+<button class="my-button" onclick="goBack()">Go Back</button>
+
+<title>{{ achievement.title }}</title>
+<h1>{{ achievement.title }}</h1>
+{% load static %}
+<img src="{{achievement.icon.url}}" alt="Achievement" width="90" height="90">
+<h2>Subscribed students</h2>
+{% if subscribed_list %}
+    <ul>
+    {% for student in achievement.subscribed_students.all %}
+        <li>{{ student.user.username }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p><span style="color: darkslateblue; ">No students are subscribed</span></p>
+{% endif %}
+
+
+
+<h2>Rewarded students</h2>
+{% if finished_list %}
+    <ul>
+    {% for student in achievement.finished_students.all %}
+        <li>{{ student.user.username }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+<p><span style="color: darkslateblue; ">No students are rewarded by this achievement</span></p>
+{% endif %}
+
+<script>
+    function goBack() {
+      history.back();
+    }
+  </script>

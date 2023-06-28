@@ -131,6 +131,10 @@ INSTALLED_APPS = [
     'hijack',
     'hijack.contrib.admin',
     'tinymce',
+
+    'ach_admin.apps.AchAdminConfig',
+
+
 ]
 
 MIDDLEWARE = [
@@ -271,6 +275,11 @@ USE_TZ = True
 
 STATIC_ROOT = '/static/'
 
+#STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
 if DEBUG:
     STATIC_URL = f'/{PREFIX}static/'
 else:
@@ -278,6 +287,11 @@ else:
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/uploaded_media'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# paths for achievements
+ACHIEVEMENT_FOLDER = "achievements"
+
 
 # Sendfile settings
 SENDFILE_BACKEND = "django_sendfile.backends.nginx"

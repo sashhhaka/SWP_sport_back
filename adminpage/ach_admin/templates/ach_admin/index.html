@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+</head>
+<body style="padding-bottom: 1000px;">
+    <div class="menu">
+    <div class="main-part">
+        <div class="right-part">
+            <button class="achievements-button">
+                Achievements
+            </button>
+            <button class="events-button">
+                Events
+            </button>
+        </div>
+        <div class="left-part">
+            <button class="name-button">
+                Name Surname
+            </button>
+            <button class="club-button">
+                Club name
+            </button>
+        </div>
+    </div>
+    <div class="leave">
+        <button class="admin-panel-button" onclick="location.href = '/admin'">
+            Admin panel
+        </button>
+        <button class="leave-admin-page-button">
+            Leave admin page
+        </button>
+    </div>
+    </div>
+{% if achievement_list %}
+    <ul style="list-style: none">
+    {% for achievement in achievement_list %}
+        <li>
+            <div class="achievement" style="
+            top: 30px;
+            position: relative">
+                <div class="invisible-break"></div>
+                <div class="achievement-body">
+                    <div class="achievement-icon-frame">
+                        <img class="achievement-icon" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon"></div>
+                    <div class="achievement-name">
+                        <a href="/ach_admin/{{ achievement.id }}/">
+                            {{ achievement.title }}
+                        </a></div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p style="top: 100px">No achievements are available</p>
+{% endif %}
+</body>
+</html>
