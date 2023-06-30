@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from sport.admin.site import site
 admin.site.site_url = 'http://127.0.0.1:8000/ach_admin/'
 
 # Register your models here.
@@ -24,9 +24,9 @@ class studentPage(admin.ModelAdmin):
 
 
 # admin.site.register(Question)
-admin.site.register(Achievement, achievementPage)
-admin.site.register(AchTeacher, teacherPage)
-admin.site.register(AchStudent, studentPage)
+site.register(Achievement, achievementPage)
+site.register(AchTeacher, teacherPage)
+site.register(AchStudent, studentPage)
 #admin.site.register(Achievement)
 #admin.site.register(AchTeacher)
 #admin.site.register(AchStudent)

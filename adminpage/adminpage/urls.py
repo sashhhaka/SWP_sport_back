@@ -49,7 +49,7 @@ urlpatterns = [
         path('hijack/', include('hijack.urls')),
 
         path("ach_admin/", include("ach_admin.urls")),
-        path("admin/", admin.site.urls)
+        path("admin/", site.urls)
 
     ]))
 ] \
