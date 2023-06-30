@@ -41,7 +41,7 @@ urlpatterns = [
         path("", include("sport.urls")),
         # only /metrics
         path('', include('django_prometheus.urls')),
-        #path('admin/', site.urls),
+        #path('first_admin/', site.urls),
         path('oauth2/', include('django_auth_adfs.urls')),
 
         path("api/", include("api.urls")),

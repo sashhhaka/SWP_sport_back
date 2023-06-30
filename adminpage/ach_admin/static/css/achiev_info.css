@@ -1,0 +1,121 @@
+* {
+    box-sizing: border-box;
+}
+
+.modal-dialog {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 90px !important;
+}
+
+.achiev_window.show {
+    pointer-events: auto;
+    display: flex;
+}
+
+.achiev_info {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+    opacity: 10px;
+    display: grid;
+    width: 600px;
+    height: fit-content;
+    padding: 30px 0px 30px 30px;
+    text-align: start;
+    border-radius: 30px;
+    background: #bcbcbc;
+    border: none;
+}
+
+.icon_name_description_close {
+    display: grid;
+    height: fit-content;
+    grid-template-columns: 150px 1fr 60px;
+    text-align: start;
+    background: none;
+    border: none;
+}
+
+.achiev_info .icon,
+.achiev_info .achievement-name {
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.name_and_description {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    text-align: start;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    border: none;
+}
+
+.students {
+    display: grid;
+    height: fit-content;
+    width: fit-content;
+    text-align: start;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.assigned_coaches,
+.subscribed_students,
+.finished_students {
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: none;
+    border-color: white;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    height: fit-content;
+    font-size: 20px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.assigned_coaches:hover,
+.subscribed_students:hover,
+.finished_students:hover {
+    opacity: 0.7;
+}
+
+.description {
+    margin-top: 5px;
+    width: fit-content;
+    align-items: start;
+    color: white;
+    font-size: 20px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.close {
+    text-align: end;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    border: none;
+    color: white!important;
+    cursor: pointer;
+    font-size: 20px;
+    opacity: 1!important;
+}
+
+.close:hover {
+    opacity: 0.7!important;
+}
+
+.modal-content {
+    background-color: transparent!important;
+    border: none!important;
+}
+
+.modal-body {
+    padding: 0!important;
+}

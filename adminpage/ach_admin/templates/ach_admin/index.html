@@ -7,11 +7,22 @@
     <title>Achievements</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/achievements.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/achiev_info.css' %}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
-<body style="padding-bottom: 1000px;">
+<body>
     <div class="menu">
-    <div class="main-part">
-        <div class="right-part">
+        <div class="exit-logo">
+            <button class="leave-admin-page-button" onclick="location.href = '/admin'">
+                Exit
+            </button>
+            <button class="logo">
+                <img class="Inno_Logo" src="{% static 'images/Inno_Logo.png' %}">
+            </button>
+        </div>
+        <div class="left-part">
             <button class="achievements-button">
                 Achievements
             </button>
@@ -19,40 +30,39 @@
                 Events
             </button>
         </div>
-        <div class="left-part">
+        <div class="right-part">
             <button class="name-button">
                 Name Surname
-            </button>
+                </button>
             <button class="club-button">
                 Club name
             </button>
         </div>
     </div>
-    <div class="leave">
-        <button class="admin-panel-button" onclick="location.href = '/admin'">
-            Admin panel
-        </button>
-        <button class="leave-admin-page-button">
-            Leave admin page
-        </button>
-    </div>
-    </div>
+
 {% if achievement_list %}
     <ul style="list-style: none">
+        <li>
+            <button class="new">
+                <p class="new-text">
+                    + New
+                </p>
+            </button>
+        </li>
     {% for achievement in achievement_list %}
         <li>
-            <div class="achievement" style="
-            top: 30px;
-            position: relative">
-                <div class="invisible-break"></div>
-                <div class="achievement-body">
-                    <div class="achievement-icon-frame">
-                        <img class="achievement-icon" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon"></div>
+            <div class="achievements">
+                <button class="achievement_short_info" id= "{{ achievement.id }}" data-toggle="modal" data-target="#exampleModal"
+                data-id="{{ achievement.id }}"
+                data-imgurl="{{ achievement.icon.url }}"
+                data-name="{{ achievement.title }}">
+                    <div class="icon">
+                        <img class="achiev-img" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon">
+                    </div>
                     <div class="achievement-name">
-                        <a href="/ach_admin/{{ achievement.id }}/">
-                            {{ achievement.title }}
-                        </a></div>
-                </div>
+                        {{ achievement.title }}
+                    </div>
+                </button>
             </div>
         </li>
     {% endfor %}
@@ -60,5 +70,50 @@
 {% else %}
     <p style="top: 100px">No achievements are available</p>
 {% endif %}
+<!-- Modal window for achievement info -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+            <div class="achiev_info">
+                <div class="icon_name_description_close">
+                    <div class="icon">
+                        <img class="achiev-img" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon">
+                    </div>
+                    <div class="name_and_description">
+                        <h5 class="achievement-name" href="/ach_admin/{{ achievement.id }}/">
+                            {{ achievement.title }}
+                        </h5>
+                        <div class="description">
+                            Description:
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="students">
+                    <button class="assigned_coaches" id="assigned_coaches">
+                        > &nbsp Open assigned coaches
+                    </button>
+                    <button class="subscribed_students" id="subscribed_students">
+                        > &nbsp  Open subscribed students
+                    </button>
+                    <button class="finished_students" id="finished_students">
+                        > &nbsp  Open finished students
+                    </button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<script src="../../../static/js/achiev_info.js"></script>
+
 </body>
 </html>
