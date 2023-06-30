@@ -33,6 +33,8 @@ class Achievement(models.Model):
 
     # def student_set(self):
     #     return self.subscribed_students
+    def get_id(self):
+        return self.title + 'id'
 
 
 class AchTeacher(models.Model):
