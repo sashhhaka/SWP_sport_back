@@ -48,7 +48,9 @@ class AchTeacher(models.Model):
 
 
 class AchStudent(models.Model):
-    user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, default=None)
+    user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, default=None, limit_choices_to={
+            'groups__verbose_name': settings.STUDENT_AUTH_GROUP_VERBOSE_NAME
+        },)
     current_achievements = models.ManyToManyField(Achievement, blank=True, related_name='current_achievements')
     finished_achievements = models.ManyToManyField(Achievement, blank=True, related_name='finished_achievements')
 
