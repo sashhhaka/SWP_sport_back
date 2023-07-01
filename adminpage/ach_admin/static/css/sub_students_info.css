@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
+.students_sub_and_fin {
+    grid-template-columns: 400px 400px;
+}
+
+.btn btn-primary {
+    background: none;
+}
+
+.modal-content {
+    background-color: transparent!important;
+    border: none!important;
+}
+
+.modal-body {
+    padding: 0!important;
+}
+
+.ass_coaches_window,
+.fin_students_window,
+.sub_students_window {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ass_coaches_window.show,
+.fin_students_window.show,
+.sub_students_window.show {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.ass_coaches_info {
+    opacity: 10px;
+    display: grid;
+    width: 350px;
+    height: fit-content;
+    text-align: start;
+    border-radius: 30px;
+    background: none;
+    border: none;
+    padding: 0px 0px 0px 30px;
+}
+
+.fin_students_info,
+.sub_students_info {
+    opacity: 10px;
+    display: grid;
+    width: 350px;
+    height: fit-content;
+    padding: 30px 0px 30px 30px;
+    text-align: start;
+    border-radius: 30px;
+    background: none;
+    border: none;
+}
+
+.available_ass_coaches,
+.available_fin_students,
+.available_sub_students {
+    width: fit-content;
+    align-items: start;
+    color: white;
+    font-size: 20px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.add_ass_coaches,
+.add_fin_students,
+.add_sub_students {
+    width: fit-content;
+    align-items: start;
+    justify-content: start;
+    padding: 0 0 0 0;
+    background: none;
+    border: none;
+    color: black;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.add_ass_coaches:hover,
+.add_fin_students:hover,
+.add_sub_students:hover {
+    opacity: 0.7;
+}
+
+.available_fin_students_block,
+.available_sub_students_block {
+    width: fit-content;
+}
+
+.available_ass_coaches_list,
+.available_fin_students_list,
+.available_sub_students_list {
+    margin-top: 30px;
+    padding: 15px 25px 5px 25px;
+    background-color: white;
+    border-radius: 30px;
+    height: fit-content;
+    width: 350px;
+    align-items: start;
+}
+
+.available_ass_coaches_list p,
+.available_fin_students_list p,
+.available_sub_students_list p {
+    color: black;
+    font-size: 15px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.ass_coaches_close,
+.fin_students_close,
+.sub_students_close {
+    text-align: end;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.ass_coaches_close:hover,
+.fin_students_close:hover,
+.sub_students_close:hover {
+    opacity: 0.7;
+}
+
+.students-list {
+    padding-left: 0px;
+}

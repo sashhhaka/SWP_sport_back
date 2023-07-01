@@ -3,11 +3,12 @@
 }
 
 .modal-dialog {
-    position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 90px !important;
+    margin-top: 0 !important;
+    width: fit-content !important;
+    max-width: 900px !important;
 }
 
 .achiev_window.show {
@@ -19,7 +20,7 @@
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
     opacity: 10px;
     display: grid;
-    width: 600px;
+    width: 900px;
     height: fit-content;
     padding: 30px 0px 30px 30px;
     text-align: start;
@@ -118,4 +119,8 @@
 
 .modal-body {
     padding: 0!important;
+}
+
+.modal-dialog {
+
 }
