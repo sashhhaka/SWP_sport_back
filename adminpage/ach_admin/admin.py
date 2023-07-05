@@ -3,7 +3,6 @@ from sport.admin.site import site
 
 admin.site.site_url = 'http://127.0.0.1:8000/ach_admin/'
 
-
 from .models import Achievement, AchTeacher, AchStudent
 from .forms import AchievementForm
 
@@ -45,31 +44,24 @@ class AchievementCoach(admin.TabularInline):
 @admin.register(Achievement)
 class AchievementPage(admin.ModelAdmin):
     change_list_template = 'ach_admin/admin.html'
-    #filter_horizontal = ('subscribed_students', 'assigned_coaches', 'finished_students',)
     form = AchievementForm
-    #filter_horizontal = ('subscribed_students', 'assigned_coaches', 'finished_students',)
-
+    # filter_horizontal = ('subscribed_students', 'assigned_coaches', 'finished_students',)
 
 
 @admin.register(AchTeacher)
 class TeacherPage(admin.ModelAdmin):
+    change_list_template = 'ach_admin/admin.html'
     model = AchTeacher
     inlines = [AchievementCoach, ]
 
 
 @admin.register(AchStudent)
 class StudentPage(admin.ModelAdmin):
-    # filter_horizontal = ('finished_achievements', 'current_achievements',)
+    change_list_template = 'ach_admin/admin.html'
     model = AchStudent
     inlines = [AchievementSubscribed, AchievementFinished, ]
 
 
-
-
-# admin.site.register(Question)
 site.register(Achievement, AchievementPage)
 site.register(AchTeacher, TeacherPage)
 site.register(AchStudent, StudentPage)
-# admin.site.register(Achievement)
-# admin.site.register(AchTeacher)
-# admin.site.register(AchStudent)

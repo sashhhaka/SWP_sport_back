@@ -19,7 +19,7 @@ class Achievement(models.Model):
     title = models.CharField(max_length=200)
     icon = models.ImageField(upload_to="ach_admin/acheivements", default=None)
     assigned_coaches = models.ManyToManyField('AchTeacher', through='AchievementAchTeacher', blank=True, )
-    subscribed_students = models.ManyToManyField('AchStudent',  through='CurrentAchievementAchStudent', blank=True)
+    subscribed_students = models.ManyToManyField('AchStudent', through='CurrentAchievementAchStudent', blank=True)
     finished_students = models.ManyToManyField('AchStudent', through='FinishedAchievementAchStudent', blank=True,
                                                related_name='finished_students')
 
@@ -34,7 +34,6 @@ class AchTeacher(models.Model):
     user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, default=None)
     club_name = models.CharField(max_length=200)
     is_admin = models.BooleanField(default=False)
-    #assigned_achievements = models.ManyToManyField(Achievement, blank=True)
 
     def __str__(self):
         return self.user.email
@@ -46,10 +45,8 @@ class AchTeacher(models.Model):
 
 class AchStudent(models.Model):
     user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, default=None, limit_choices_to={
-            'groups__verbose_name': settings.STUDENT_AUTH_GROUP_VERBOSE_NAME
-        },)
-    # current_achievements = models.ManyToManyField(Achievement, blank=True, related_name='current_achievements')
-    # finished_achievements = models.ManyToManyField(Achievement, blank=True, related_name='finished_achievements')
+        'groups__verbose_name': settings.STUDENT_AUTH_GROUP_VERBOSE_NAME
+    }, )
 
     def __str__(self):
         return self.user.email
@@ -65,7 +62,7 @@ class AchievementAchTeacher(models.Model):
     date_achieved = models.DateField(default=datetime.date.today)
 
     def __str__(self):
-        return f""
+        return ""
 
     class Meta:
         verbose_name = 'Assigned Achievement'
@@ -82,7 +79,7 @@ class CurrentAchievementAchStudent(models.Model):
         verbose_name_plural = 'Current Achievements'
 
     def __str__(self):
-        return f"{self.achievement} - {self.ach_student}"
+        return ""
 
 
 class FinishedAchievementAchStudent(models.Model):
@@ -95,7 +92,6 @@ class FinishedAchievementAchStudent(models.Model):
         verbose_name_plural = 'Finished Achievements'
 
     def __str__(self):
-        return f"{self.achievement} - {self.ach_student}"
-
+        return ""
 
 # test models

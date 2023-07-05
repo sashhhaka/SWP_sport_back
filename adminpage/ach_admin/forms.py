@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from .models import AchTeacher, Achievement, AchStudent
 
+
 class AchievementForm(forms.ModelForm):
     assigned_coaches = forms.ModelMultipleChoiceField(
         queryset=AchTeacher.objects.all(),
