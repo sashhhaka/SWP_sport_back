@@ -7,5 +7,4 @@ urlpatterns = [
     # ex: /polls/
     path("", views.index, name="index"),
 
-
 ]

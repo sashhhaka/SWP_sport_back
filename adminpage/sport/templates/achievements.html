@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Welcome to the Sport App</h1>
+  <!-- Your content here -->
+  <button onclick="redirectToAchAdmin()">Go to ach_admin</button>
+
+  <script>
+    function redirectToAchAdmin() {
+      window.location.href = "/ach_admin/";
+    }
+  </script>
+{% endblock %}
