@@ -18,9 +18,9 @@ def get_achievement_icon_path(instance, filename):
 class Achievement(models.Model):
     title = models.CharField(max_length=200)
     icon = models.ImageField(upload_to="ach_admin/acheivements", default=None)
-    assigned_coaches = models.ManyToManyField('AchTeacher', blank=True, )
-    subscribed_students = models.ManyToManyField('AchStudent',  blank=True)
-    finished_students = models.ManyToManyField('AchStudent', blank=True,
+    assigned_coaches = models.ManyToManyField('AchTeacher', through='AchievementAchTeacher', blank=True, )
+    subscribed_students = models.ManyToManyField('AchStudent',  through='CurrentAchievementAchStudent', blank=True)
+    finished_students = models.ManyToManyField('AchStudent', through='FinishedAchievementAchStudent', blank=True,
                                                related_name='finished_students')
 
     def __str__(self):
@@ -40,8 +40,8 @@ class AchTeacher(models.Model):
         return self.user.email
 
     class Meta:
-        verbose_name = 'Teacher Achievement'
-        verbose_name_plural = 'Teacher Achievements'
+        verbose_name = 'Teacher with Achievement'
+        verbose_name_plural = 'Teacher with Achievements'
 
 
 class AchStudent(models.Model):
@@ -55,14 +55,14 @@ class AchStudent(models.Model):
         return self.user.email
 
     class Meta:
-        verbose_name = 'Student Achievement'
-        verbose_name_plural = 'Student Achievements'
+        verbose_name = 'Student with Achievement'
+        verbose_name_plural = 'Students with Achievements'
 
 
 class AchievementAchTeacher(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     ach_teacher = models.ForeignKey(AchTeacher, on_delete=models.CASCADE)
-    date_achieved = models.DateField()
+    date_achieved = models.DateField(default=datetime.date.today)
 
     def __str__(self):
         return f""
@@ -75,7 +75,7 @@ class AchievementAchTeacher(models.Model):
 class CurrentAchievementAchStudent(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     ach_student = models.ForeignKey(AchStudent, on_delete=models.CASCADE)
-    date_achieved = models.DateField()
+    date_achieved = models.DateField(default=datetime.date.today)
 
     class Meta:
         verbose_name = 'Current Achievement'
@@ -88,7 +88,7 @@ class CurrentAchievementAchStudent(models.Model):
 class FinishedAchievementAchStudent(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     ach_student = models.ForeignKey(AchStudent, on_delete=models.CASCADE)
-    date_achieved = models.DateField()
+    date_achieved = models.DateField(default=datetime.date.today)
 
     class Meta:
         verbose_name = 'Finished Achievement'

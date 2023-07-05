@@ -3,11 +3,9 @@ from sport.admin.site import site
 
 admin.site.site_url = 'http://127.0.0.1:8000/ach_admin/'
 
-# Register your models here.
 
-# test
-# base
 from .models import Achievement, AchTeacher, AchStudent
+from .forms import AchievementForm
 
 """Inlines for ach_student and ach_teacher
 Enable many-to-many relationship in admin page for them
@@ -44,35 +42,34 @@ class AchievementCoach(admin.TabularInline):
         return f"Achievement Coach"
 
 
-
-
-
 @admin.register(Achievement)
-class achievementPage(admin.ModelAdmin):
+class AchievementPage(admin.ModelAdmin):
     change_list_template = 'ach_admin/admin.html'
-    filter_horizontal = ('subscribed_students', 'assigned_coaches', 'finished_students',)
+    #filter_horizontal = ('subscribed_students', 'assigned_coaches', 'finished_students',)
+    form = AchievementForm
+    #filter_horizontal = ('subscribed_students', 'assigned_coaches', 'finished_students',)
+
 
 
 @admin.register(AchTeacher)
-class teacherPage(admin.ModelAdmin):
+class TeacherPage(admin.ModelAdmin):
     model = AchTeacher
     inlines = [AchievementCoach, ]
 
 
 @admin.register(AchStudent)
-class studentPage(admin.ModelAdmin):
+class StudentPage(admin.ModelAdmin):
     # filter_horizontal = ('finished_achievements', 'current_achievements',)
     model = AchStudent
     inlines = [AchievementSubscribed, AchievementFinished, ]
 
 
-# solution for ach_student and ach_teacher
 
 
 # admin.site.register(Question)
-site.register(Achievement, achievementPage)
-site.register(AchTeacher, teacherPage)
-site.register(AchStudent, studentPage)
+site.register(Achievement, AchievementPage)
+site.register(AchTeacher, TeacherPage)
+site.register(AchStudent, StudentPage)
 # admin.site.register(Achievement)
 # admin.site.register(AchTeacher)
 # admin.site.register(AchStudent)
