@@ -2,7 +2,6 @@ from django.test import TestCase, RequestFactory
 from django.urls import reverse
 
 from accounts.models import User
-from sport.models import Semester
 
 # import Group from Authentification and Authorization
 from django.contrib.auth.models import Group
@@ -12,6 +11,22 @@ from .models import Achievement, AchTeacher, AchStudent, \
 from .views import index
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Create a console handler and set its log level to INFO
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+
+# Create a formatter and add it to the console handler
+formatter = logging.Formatter('\n%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+
+# Add the console handler to the logger
+logger.addHandler(console_handler)
+
 
 '''
 Run all tests with: python manage.py test ach_admin
@@ -50,6 +65,7 @@ class AchievementModelTests(TestCase):
             achievement = Achievement(title=title)
             achievement.save()
             self.assertIs(Achievement.objects.filter(title=title).count(), 1)
+        logger.info(f"unique_achievement_name test: passed")
 
     def test_achievement_ach_teacher_relation(self):
         """
@@ -85,6 +101,8 @@ class AchievementModelTests(TestCase):
         self.assertEqual(teacher1.achievementachteacher_set.first().achievement, achievement)
         self.assertEqual(teacher2.achievementachteacher_set.first().achievement, achievement)
 
+        logger.info(f"test_achievement_ach_teacher_relation test: passed")
+
     # TODO: make the test work
     def test_achievement_ach_student_relation(self):
         """
@@ -119,6 +137,9 @@ class AchievementModelTests(TestCase):
         self.assertEqual(student1.currentachievementachstudent_set.first().achievement, achievement)
         self.assertEqual(student2.currentachievementachstudent_set.first().achievement, achievement)
 
+        logger.info(f"test_achievement_ach_student_relation test: passed")
+
+
 """
 Tests for views:
 """
@@ -149,6 +170,8 @@ class AchievementViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.achievement.title)
 
+        logger.info(f"index_view test: passed")
+
     def test_index_view_no_achievements(self):
         """
         Tests if index view is working correctly when no achievements are present.
@@ -160,9 +183,13 @@ class AchievementViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No achievements are available")  # Expect a message indicating no achievements
 
+        logger.info(f"index_view_no_achievements test: passed")
+
     def test_achievement_model_str(self):
         """
         Test if __str__ method of Achievement model is working correctly.
         """
         achievement = Achievement.objects.create(title="Achievement")
         self.assertEqual(str(achievement), "Achievement")
+
+        logger.info(f"achievement_model_str test: passed")
