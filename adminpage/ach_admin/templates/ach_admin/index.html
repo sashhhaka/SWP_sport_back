@@ -20,13 +20,22 @@
     <div class="menu">
 
         <div class="exit-logo">
-            <button class="leave-admin-page-button" onclick="location.href = '/profile'">
-                Exit
-            </button>
             <button class="logo">
                 <img class="Inno_Logo" src="{% static 'images/inno.png' %}">
             </button>
+            <button class="leave-admin-page-button" onclick="location.href = '/profile'">
+                Exit
+            </button>
+            {% if user.is_staff or user.is_superuser %}
+            <button class="leave-admin-page-button" onclick="location.href = '/admin'">
+                Admin
+            </button>
+            {% endif %}
+
+
         </div>
+
+
 
         <div class="left-part">
             <button class="achievements-button">
@@ -36,11 +45,7 @@
                 Events
             </button>
         </div>
-        {% if user.is_staff or user.is_superuser %}
-            <button class="leave-admin-page-button" onclick="location.href = '/admin'">
-                Admin
-            </button>
-        {% endif %}
+
         <div class="right-part">
             <button class="name-button">
                 Name Surname

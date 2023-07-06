@@ -16,7 +16,7 @@ def get_achievement_icon_path(instance, filename):
 # models.py
 
 class Achievement(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True, blank=False)
     icon = models.ImageField(upload_to="ach_admin/acheivements", default=None)
     assigned_coaches = models.ManyToManyField('AchTeacher', through='AchievementAchTeacher', blank=True, )
     subscribed_students = models.ManyToManyField('AchStudent', through='CurrentAchievementAchStudent', blank=True)
