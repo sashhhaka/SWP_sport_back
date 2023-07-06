@@ -3,20 +3,13 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 
-from .models import Achievement
-
-
-# Create your views here.
-# def index(request):
-#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
-#     context = {"latest_question_list": latest_question_list}
-#     return render(request, "ach_admin/index.html", context)
+from .models import Achievement, AchTeacher
 
 
 # view for achievements
 def index(request):
-    # achievement_list = Achievement.objects.order_by("-title")
-    achievement_list = Achievement.objects.all()
+    teacher = AchTeacher.objects.get(user=request.user)
+    achievement_list = Achievement.objects.filter(assigned_coaches__in=[teacher])
     context = {"achievement_list": achievement_list}
     return render(request, "ach_admin/index.html", context)
 
