@@ -28,7 +28,13 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - docker-compose -f ./compose/docker-compose.yml up
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml build --no-cache
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml up -d
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel bash -c "while !</dev/tcp/db/5432; do sleep 1; done;"
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py makemigrations
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate auth
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel pytest
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
