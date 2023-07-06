@@ -25,6 +25,20 @@ Tests for models:
 
 class AchievementModelTests(TestCase):
 
+    def setUp(self):
+        """
+        Set up test environment.
+        """
+        image_path = os.path.join(os.path.dirname(__file__), "static/images/img.png")
+        image_file = open(image_path, "rb")
+        image_data = image_file.read()
+        image_file.close()
+        image = SimpleUploadedFile("img.png", image_data, content_type="image/png")
+        self.achievement = Achievement.objects.create(title="Test Achievement", icon=image)
+        self.user1 = User.objects.create_user(email="user1@innopolis,university", password="password1")
+        self.user2 = User.objects.create_user(email="user2@innopolis,university", password="password2")
+
+
     def unique_achievement_name(self):
         """
         unique_achievement_name() returns False for achievements whose name
@@ -42,15 +56,15 @@ class AchievementModelTests(TestCase):
         testing the custom relation between Achievement and AchTeacher
         """
         # Create Users
-        user1 = User.objects.create_user(email="user1@gmail.com", password="password1")
-        user2 = User.objects.create_user(email="user2@gmail.com", password="password2")
+        user1 = self.user1
+        user2 = self.user2
 
         # Create AchTeachers
         teacher1 = AchTeacher.objects.create(user=user1, club_name="Club 1")
         teacher2 = AchTeacher.objects.create(user=user2, club_name="Club 2")
 
         # Create an Achievement
-        achievement = Achievement.objects.create(title="Test Achievement")
+        achievement = self.achievement
 
         # Create AchievementAchTeacher instances
         achievement_ach_teacher1 = AchievementAchTeacher.objects.create(
@@ -72,48 +86,38 @@ class AchievementModelTests(TestCase):
         self.assertEqual(teacher2.achievementachteacher_set.first().achievement, achievement)
 
     # TODO: make the test work
-    # def test_achievement_ach_student_relation(self):
-    #     """
-    #     testing the custom relation between Achievement and AchStudent
-    #     """
-    #     # Create Semester
-    #     semester = Semester.objects.create(name="Test Semester")
-#
-    #     # Create Users
-    #     user1 = User.objects.create_user(email="user1@gmail.com", password="password1")
-    #     user2 = User.objects.create_user(email="user2@gmail.com", password="password2")
-#
-    #     # Create Group "Students" and register into it the two users
-    #     group = Group.objects.create(name="Students", semester=semester)
-    #     group.user_set.add(user1)
-    #     group.user_set.add(user2)
-#
-    #     # Create AchStudents
-    #     student1 = AchStudent.objects.create(user=user1, grade=1)
-    #     student2 = AchStudent.objects.create(user=user2, grade=2)
-#
-    #     # Create an Achievement
-    #     achievement = Achievement.objects.create(title="Test Achievement", semester=semester)
-#
-    #     # Create CurrentAchievementAchStudent instances
-    #     current_achievement_ach_student1 = CurrentAchievementAchStudent.objects.create(
-    #         achievement=achievement, ach_student=student1
-    #     )
-    #     current_achievement_ach_student2 = CurrentAchievementAchStudent.objects.create(
-    #         achievement=achievement, ach_student=student2
-    #     )
-#
-    #     # Check the relationship from Achievement to CurrentAchievementAchStudent
-    #     self.assertEqual(achievement.currentachievementachstudent_set.count(), 2)
-    #     self.assertIn(current_achievement_ach_student1, achievement.currentachievementachstudent_set.all())
-    #     self.assertIn(current_achievement_ach_student2, achievement.currentachievementachstudent_set.all())
-#
-    #     # Check the relationship from AchStudent to CurrentAchievementAchStudent
-    #     self.assertEqual(student1.currentachievementachstudent_set.count(), 1)
-    #     self.assertEqual(student2.currentachievementachstudent_set.count(), 1)
-    #     self.assertEqual(student1.currentachievementachstudent_set.first().achievement, achievement)
-    #     self.assertEqual(student2.currentachievementachstudent_set.first().achievement, achievement)
-#
+    def test_achievement_ach_student_relation(self):
+        """
+        testing the custom relation between Achievement and AchStudent
+        """
+        # Create Users
+        user1 = self.user1
+        user2 = self.user2
+        # Create Group "Students" and register into it the two users
+        group = Group.objects.create(name="Students", verbose_name="Students")
+        group.user_set.add(user1)
+        group.user_set.add(user2)
+        # Create AchStudents
+        student1 = AchStudent.objects.create(user=user1)
+        student2 = AchStudent.objects.create(user=user2)
+        # Create an Achievement
+        achievement = self.achievement
+        # Create CurrentAchievementAchStudent instances
+        current_achievement_ach_student1 = CurrentAchievementAchStudent.objects.create(
+            achievement=achievement, ach_student=student1
+        )
+        current_achievement_ach_student2 = CurrentAchievementAchStudent.objects.create(
+            achievement=achievement, ach_student=student2
+        )
+        # Check the relationship from Achievement to CurrentAchievementAchStudent
+        self.assertEqual(achievement.currentachievementachstudent_set.count(), 2)
+        self.assertIn(current_achievement_ach_student1, achievement.currentachievementachstudent_set.all())
+        self.assertIn(current_achievement_ach_student2, achievement.currentachievementachstudent_set.all())
+        # Check the relationship from AchStudent to CurrentAchievementAchStudent
+        self.assertEqual(student1.currentachievementachstudent_set.count(), 1)
+        self.assertEqual(student2.currentachievementachstudent_set.count(), 1)
+        self.assertEqual(student1.currentachievementachstudent_set.first().achievement, achievement)
+        self.assertEqual(student2.currentachievementachstudent_set.first().achievement, achievement)
 
 """
 Tests for views:
