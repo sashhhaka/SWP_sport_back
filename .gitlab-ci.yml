@@ -34,11 +34,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py makemigrations
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate auth
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate
-
-unit-test-job:   # This job runs in the test stage.
-  stage: test    # It only starts when the job in the build stage completes successfully.
-  script:
-    - - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py test ach_admin
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py test ach_admin # These are actually unit tests, however, they have to be run where the docker is built
 
 lint-test-job:   # This job also runs in the test stage.
   stage: test    # It can run at the same time as unit-test-job (in parallel).
