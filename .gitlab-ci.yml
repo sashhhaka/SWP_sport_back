@@ -36,11 +36,12 @@ build-job:       # This job runs in the build stage, which runs first.
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python3 -m pip install coverage
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage run manage.py test ach_admin #unit_tests
-    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage html --include=ach_admin/*
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage xml --include=ach_admin/*
   artifacts:
     reports:
       coverage_report:
-        path: adminpage/htmlcov/index.html
+        coverage_format: cobertura
+        path: adminpage/coverage.xml
     when: on_success
     expire_in: 30 days
 
