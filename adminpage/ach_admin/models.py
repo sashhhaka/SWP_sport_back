@@ -69,6 +69,43 @@ class AchievementAchTeacher(models.Model):
         verbose_name_plural = 'Assigned Achievements'
 
 
+class AchievementAchStudent(models.Model):
+    ACHIEVEMENT_STATUS_CHOICES = [
+        ('subscribed', 'Subscribed'),
+        ('finished', 'Finished'),
+        ('unsubscribed', 'Unsubscribed'),
+    ]
+
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    ach_student = models.ForeignKey(AchStudent, on_delete=models.CASCADE)
+    date_achieved = models.DateField(default=datetime.date.today, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=ACHIEVEMENT_STATUS_CHOICES)
+
+    class Meta:
+        verbose_name = 'Achievement Status'
+        verbose_name_plural = 'Achievement Statuses'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['ach_student', 'achievement'],
+                name='unique_achievement_status'
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.ach_student} - {self.achievement} ({self.status})"
+
+    def save(self, *args, **kwargs):
+        if self.status != 'finished':
+            self.date_achieved = None
+        super().save(*args, **kwargs)
+
+    def is_achieved(self):
+        return self.status == 'finished'
+
+    is_achieved.boolean = True
+    is_achieved.short_description = 'Achieved'
+
+
 class CurrentAchievementAchStudent(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     ach_student = models.ForeignKey(AchStudent, on_delete=models.CASCADE)
