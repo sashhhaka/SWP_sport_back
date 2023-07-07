@@ -14,6 +14,13 @@ def index(request):
     return render(request, "ach_admin/index.html", context)
 
 
+def events(request):
+    teacher = AchTeacher.objects.get(user=request.user)
+    achievement_list = Achievement.objects.all()
+    context = {"achievement_list": achievement_list}
+    return render(request, "ach_admin/events.html", context)
+
+
 # test views
 def detail(request, achievement_id):
     achievement = get_object_or_404(Achievement, pk=achievement_id)

@@ -94,4 +94,8 @@ class FinishedAchievementAchStudent(models.Model):
     def __str__(self):
         return ""
 
-# test models
+"""
+Events models
+"""
+
+

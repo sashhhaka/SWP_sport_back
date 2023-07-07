@@ -19,8 +19,22 @@ body {
     height: 53px;
     position: relative;
     /*background-color: rgba(143, 191, 182, 0.9);*/
-    background: rgba(145,203,163, 0.5);
-    border-radius: 5px 5px 0 0;
+    background: rgba(145,203,163, 0.3);
+    border-radius: 5px 5px 5px 5px;
+    /*border-radius: 30px;*/
+    overflow: hidden;
+}
+
+.events-button-enabled {
+
+    width: 120px;
+    position: relative;
+    /*background-color: rgba(143, 191, 182, 0.9);*/
+    background: rgba(145,203,163, 0.3);
+    border-radius: 5px 5px 5px 5px;
+    /*border-radius: 20px;*/
+    /*text-shadow: 0 0 20px rgb(255, 255, 255);*/
+    /*border-bottom-color: #d70909;*/
     overflow: hidden;
 }
 

@@ -6,5 +6,6 @@ app_name = "ach_admin"
 urlpatterns = [
     # ex: /polls/
     path("", views.index, name="index"),
+    path("events/", views.events, name="events"),
 
 ]
