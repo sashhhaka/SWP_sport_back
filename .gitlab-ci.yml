@@ -41,7 +41,7 @@ build-job:       # This job runs in the build stage, which runs first.
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: adminpage/coverage.xml
+        path: coverage.xml
     when: on_success
     expire_in: 30 days
 
