@@ -37,7 +37,7 @@ unit-test-job:
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: coverage.xml
+        path: adminpage/coverage.xml
     when: on_success
     expire_in: 30 days
 
