@@ -19,13 +19,6 @@ build-job:
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python3 -m pip install coverage
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage run manage.py test ach_admin #unit_tests
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage xml --include=ach_admin/*
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
-    when: on_success
-    expire_in: 30 days
 
 unit-test-job:
   stage: test
@@ -40,6 +33,13 @@ unit-test-job:
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage run manage.py test ach_admin 
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage report --include=ach_admin/* -m
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage xml --include=ach_admin/*
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    when: on_success
+    expire_in: 30 days
 
 lint-test-job:
   stage: test
