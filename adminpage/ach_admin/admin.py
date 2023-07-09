@@ -64,47 +64,49 @@ class AchievementAchStudentInline(admin.TabularInline):
     assign_button.short_description = 'Assign'
 
 
-class AchStudentAdmin(admin.ModelAdmin):
-    inlines = [AchievementAchStudentInline]
-    list_display = ['user', 'assigned_achievements']
-    search_fields = ['user__email']
-
-    def assigned_achievements(self, obj):
-        return obj.achievementachstudent_set.count()
-
-    assigned_achievements.short_description = 'Assigned Achievements'
-
-
-site.register(AchStudent, AchStudentAdmin)
-
-
-
-
-
-
-
 
 """Inlines for ach_student and ach_teacher
 Enable many-to-many relationship in admin page for them
 """
 
 
-class AchievementSubscribed(admin.TabularInline):
-    model = Achievement.subscribed_students.through
+class AchievementSubscribedStudent(admin.TabularInline):
+    model = Achievement.students.through
     extra = 1
+    show_change_link = False
 
     class Meta:
         verbose_name = "Subscribed student"
         verbose_name_plural = "Subscribed students"
 
+    def __str__(self):
+        return f"Achievement Subscribed"
 
-class AchievementFinished(admin.TabularInline):
-    model = Achievement.finished_students.through
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.filter(status='subscribed')
+
+
+class AchievementFinishedStudent(admin.TabularInline):
+    model = Achievement.students.through
     extra = 1
 
     class Meta:
         verbose_name = "Finished student"
         verbose_name_plural = "Finished students"
+
+    def __str__(self):
+        return f"Achievement Finished"
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.filter(status='finished')
+
+    def clean(self, form, formset):
+        super().clean(form, formset)
+        if form.cleaned_data.get('status') == 'finished' and not form.cleaned_data.get('date_achieved'):
+            form.add_error('date_achieved', 'This field is required for finished achievements.')
+
 
 
 class AchievementCoach(admin.TabularInline):
@@ -119,11 +121,43 @@ class AchievementCoach(admin.TabularInline):
         return f"Achievement Coach"
 
 
+
 @admin.register(Achievement)
 class AchievementPage(admin.ModelAdmin):
     change_list_template = 'ach_admin/admin.html'
     form = AchievementForm
-    # filter_horizontal = ('subscribed_students', 'assigned_coaches', 'finished_students',)
+    # filter_horizontal = ('assigned_coaches')
+    inlines = [AchievementSubscribedStudent, AchievementFinishedStudent]
+    list_display = ['title', 'get_subscribed_students', 'get_finished_students']
+    search_fields = ['title']
+
+    # cahnge inlines names
+    def get_inline_instances(self, request, obj=None):
+        inline_instances = []
+        for inline_class in self.inlines:
+            if inline_class == AchievementSubscribedStudent:
+                inline = inline_class(self.model, self.admin_site)
+                inline.verbose_name_plural = 'Subscribed students'
+                inline_instances.append(inline)
+            elif inline_class == AchievementFinishedStudent:
+                inline = inline_class(self.model, self.admin_site)
+                inline.verbose_name_plural = 'Finished students'
+                inline_instances.append(inline)
+            else:
+                inline = inline_class(self.model, self.admin_site)
+                inline_instances.append(inline)
+        return inline_instances
+
+    def get_subscribed_students(self, obj):
+        return obj.subscribed_students().count() if obj.subscribed_students() else 'No subscribed students'
+
+    get_subscribed_students.short_description = 'Subscribed Students Count'
+
+    def get_finished_students(self, obj):
+        return obj.finished_students().count() if obj.finished_students() else 'No finished students'
+
+    get_finished_students.short_description = 'Finished Students Count'
+
 
 
 @admin.register(AchTeacher)
@@ -131,15 +165,50 @@ class TeacherPage(admin.ModelAdmin):
     change_list_template = 'ach_admin/admin.html'
     model = AchTeacher
     inlines = [AchievementCoach, ]
+    search_fields = ['user__email', 'user__first_name', 'user__last_name']
+
+    # def get_num_assigned_achievements(self, obj):
+    #     return obj.assigned_achievements.count()
+    #
+    # get_num_assigned_achievements.short_description = 'Assigned Achievements'
+    #
+    # list_display = ['user', 'get_num_assigned_achievements']
 
 
-#@admin.register(AchStudent)
-#class StudentPage(admin.ModelAdmin):
-#    change_list_template = 'ach_admin/admin.html'
-#    model = AchStudent
-#    inlines = [AchievementSubscribed, AchievementFinished, ]
+@admin.register(AchStudent)
+class StudentPage(admin.ModelAdmin):
+    change_list_template = 'ach_admin/admin.html'
+    model = AchStudent
+    search_fields = ['user__email', 'user__first_name', 'user__last_name']
+    inlines = [
+        # AchievementSubscribed, AchievementFinished,
+        AchievementSubscribedStudent, AchievementFinishedStudent,
+    ]
+
+    def get_inline_instances(self, request, obj=None):
+        inline_instances = super().get_inline_instances(request, obj)
+        subscribed_inline = next((inline for inline in inline_instances if isinstance(inline, AchievementSubscribedStudent)),
+                                 None)
+        finished_inline = next((inline for inline in inline_instances if isinstance(inline, AchievementFinishedStudent)), None)
+        if subscribed_inline and finished_inline:
+            subscribed_inline.show_change_link = False
+            finished_inline.show_change_link = False
+            subscribed_inline.verbose_name_plural = "Current Student Achievements"
+            finished_inline.verbose_name_plural = "Finished Student Achievements"
+        return inline_instances
+
+    # def get_num_subscribed_achievements(self, obj):
+    #     return obj.achievementachstudent_set.filter(status='subscribed').count()
+    #
+    # def get_num_finished_achievements(self, obj):
+    #     return obj.achievementachstudent_set.filter(status='finished').count()
+    #
+    # get_num_subscribed_achievements.short_description = 'Subscribed Achievements'
+    # get_num_finished_achievements.short_description = 'Finished Achievements'
+    #
+    # list_display = ['user', 'get_num_subscribed_achievements', 'get_num_finished_achievements']
 
 
 site.register(Achievement, AchievementPage)
 site.register(AchTeacher, TeacherPage)
-#site.register(AchStudent, StudentPage)
+site.register(AchStudent, StudentPage)

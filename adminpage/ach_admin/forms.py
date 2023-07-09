@@ -9,16 +9,17 @@ class AchievementForm(forms.ModelForm):
         widget=FilteredSelectMultiple(verbose_name='Assigned Coaches', is_stacked=False),
         required=False,
     )
-    subscribed_students = forms.ModelMultipleChoiceField(
-        queryset=AchStudent.objects.all(),
-        widget=FilteredSelectMultiple(verbose_name='Subscribed Students', is_stacked=False),
-        required=False,
-    )
-    finished_students = forms.ModelMultipleChoiceField(
-        queryset=AchStudent.objects.all(),
-        widget=FilteredSelectMultiple(verbose_name='Finished Students', is_stacked=False),
-        required=False,
-    )
+    # subscribed_students = forms.ModelMultipleChoiceField(
+    #     queryset=AchStudent.objects.all(),
+    #     widget=FilteredSelectMultiple(verbose_name='Subscribed Students', is_stacked=False),
+    #     required=False,
+    # )
+    # finished_students = forms.ModelMultipleChoiceField(
+    #     queryset=AchStudent.objects.all(),
+    #     widget=FilteredSelectMultiple(verbose_name='Finished Students', is_stacked=False),
+    #     required=False,
+    # )
+
 
     class Media:
         css = {

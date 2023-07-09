@@ -3,6 +3,7 @@ import datetime
 from django.utils import timezone
 from django.conf import settings
 import uuid
+from django.core.exceptions import ValidationError
 
 
 # base models
@@ -19,15 +20,26 @@ class Achievement(models.Model):
     title = models.CharField(max_length=200, unique=True, blank=False)
     icon = models.ImageField(upload_to="ach_admin/acheivements", default=None)
     assigned_coaches = models.ManyToManyField('AchTeacher', through='AchievementAchTeacher', blank=True, )
-    subscribed_students = models.ManyToManyField('AchStudent', through='CurrentAchievementAchStudent', blank=True)
-    finished_students = models.ManyToManyField('AchStudent', through='FinishedAchievementAchStudent', blank=True,
-                                               related_name='finished_students')
+    # subscribed_students = models.ManyToManyField('AchStudent', through='CurrentAchievementAchStudent', blank=True)
+    # finished_students = models.ManyToManyField('AchStudent', through='FinishedAchievementAchStudent', blank=True,
+    #                                            related_name='finished_students')
+
+    students = models.ManyToManyField('AchStudent', through='AchievementAchStudent', blank=True, related_name='students')
 
     def __str__(self):
         return self.title
 
     def get_id(self):
         return self.title + 'id'
+
+    def subscribed_students(self):
+        return self.students.filter(achievementachstudent__status='subscribed')
+
+    def finished_students(self):
+        return self.students.filter(achievementachstudent__status='finished')
+
+
+
 
 
 class AchTeacher(models.Model):
@@ -56,10 +68,12 @@ class AchStudent(models.Model):
         verbose_name_plural = 'Students with Achievements'
 
 
+
+
 class AchievementAchTeacher(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     ach_teacher = models.ForeignKey(AchTeacher, on_delete=models.CASCADE)
-    date_achieved = models.DateField(default=datetime.date.today)
+    date_assigned = models.DateField(default=datetime.date.today, blank=False, null=False)
 
     def __str__(self):
         return ""
@@ -69,11 +83,11 @@ class AchievementAchTeacher(models.Model):
         verbose_name_plural = 'Assigned Achievements'
 
 
+
 class AchievementAchStudent(models.Model):
     ACHIEVEMENT_STATUS_CHOICES = [
         ('subscribed', 'Subscribed'),
         ('finished', 'Finished'),
-        ('unsubscribed', 'Unsubscribed'),
     ]
 
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
@@ -92,7 +106,7 @@ class AchievementAchStudent(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.ach_student} - {self.achievement} ({self.status})"
+        return ""
 
     def save(self, *args, **kwargs):
         if self.status != 'finished':
@@ -102,8 +116,17 @@ class AchievementAchStudent(models.Model):
     def is_achieved(self):
         return self.status == 'finished'
 
+
+
     is_achieved.boolean = True
     is_achieved.short_description = 'Achieved'
+
+    def clean(self):
+        if self.status == 'finished' and not self.date_achieved:
+            raise ValidationError({'date_achieved': 'This field is required for finished achievements.'})
+
+
+
 
 
 class CurrentAchievementAchStudent(models.Model):

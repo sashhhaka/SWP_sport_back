@@ -11,8 +11,17 @@ body {
 .achievements {
     display: flex;
     flex-direction: column;
-    margin-left: 200px;
+    margin-left: 35px;
 }
+
+.achievements-grid {
+  display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+  grid-column-gap: 5px; /* Adjust the horizontal gap as desired */
+  grid-row-gap: 3px; /* Adjust the vertical gap as desired */
+}
+
 
 .achievements-button {
     width: 170px;
@@ -44,8 +53,8 @@ body {
 .new {
     display: flex;
     flex-direction: column;
-    margin-left: 200px;
-    width: 480px;
+    margin-left: 35px;
+    width: 405px;
     height: 40px;
     align-content: center;
     justify-content: center;
@@ -72,7 +81,7 @@ body {
     grid-template-columns: 170px 1fr;
     padding-right: 20px;
     text-align: start;
-    width: 475px;
+    width: 400px;
     height: 150px;
     border-radius: 30px;
     background-color: rgba(50, 50, 140, 0.15);
