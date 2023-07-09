@@ -27,7 +27,6 @@ console_handler.setFormatter(formatter)
 # Add the console handler to the logger
 logger.addHandler(console_handler)
 
-
 '''
 Run all tests with: python manage.py test ach_admin
 Run specific test with: python manage.py test ach_admin.tests.AchievementModelTests
@@ -53,11 +52,9 @@ class AchievementModelTests(TestCase):
         self.user1 = User.objects.create_user(email="user1@innopolis,university", password="password1")
         self.user2 = User.objects.create_user(email="user2@innopolis,university", password="password2")
 
-
     def unique_achievement_name(self):
         """
-        unique_achievement_name() returns False for achievements whose name
-        is not unique.
+        Tests if database does not accept non-unique achievement titles.
         """
         # check for not unique names
         titles = ["achievement", "achievement"]
@@ -69,7 +66,7 @@ class AchievementModelTests(TestCase):
 
     def test_achievement_ach_teacher_relation(self):
         """
-        testing the custom relation between Achievement and AchTeacher
+        Testing the custom Many-to-Many relation between Achievement and AchTeacher.
         """
         # Create Users
         user1 = self.user1
@@ -103,10 +100,9 @@ class AchievementModelTests(TestCase):
 
         logger.info(f"test_achievement_ach_teacher_relation test: passed")
 
-    # TODO: make the test work
     def test_achievement_ach_student_relation(self):
         """
-        testing the custom relation between Achievement and AchStudent
+        Testing the custom Many-to-Many relation between Achievement and AchStudent
         """
         # Create Users
         user1 = self.user1
