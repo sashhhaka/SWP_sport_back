@@ -94,9 +94,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv_boolean("DEBUG")
+#DEBUG = getenv_boolean("DEBUG")
+DEBUG = True
 PROJECT_ROOT = "/src/"
-ALLOWED_HOSTS = [HOSTNAME, 'adminpanel', '89.223.121.66']
+ALLOWED_HOSTS = [HOSTNAME, 'adminpanel', '89.223.121.66', 'localhost']
 
 if DEBUG:
     ALLOWED_HOSTS.append('localhost')
