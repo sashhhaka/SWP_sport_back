@@ -158,14 +158,28 @@ class AchievementViewTest(TestCase):
         image_file.close()
         image = SimpleUploadedFile("img.png", image_data, content_type="image/png")
         self.achievement = Achievement.objects.create(title="Test Achievement", icon=image)
+        self.user1 = User.objects.create_user(email="user1@innopolis,university", password="password1")
+        self.user2 = User.objects.create_user(email="user2@innopolis,university", password="password2")
 
     def test_index_view(self):
         """
         Test if index view is working correctly.
         Ensures that the view returns a successful response and contains the previously inserted achievement's title.
+        Also, it tests if a teacher can see achievement assigned specifically to him/her.
         """
         url = reverse("ach_admin:index")
+        user = self.user1
+        teacher1 = AchTeacher.objects.create(user=user, club_name="Club 1")
+
+        achievement = self.achievement
+
+        # Create AchievementAchTeacher instances
+        achievement_ach_teacher1 = AchievementAchTeacher.objects.create(
+            achievement=achievement, ach_teacher=teacher1
+        )
+
         request = self.factory.get(url)
+        request.user = user
         response = index(request)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.achievement.title)
@@ -174,11 +188,14 @@ class AchievementViewTest(TestCase):
 
     def test_index_view_no_achievements(self):
         """
-        Tests if index view is working correctly when no achievements are present.
+        Tests if index view is working correctly when no achievements are present for registered teacher.
         """
         Achievement.objects.all().delete()  # Delete all achievements
         url = reverse("ach_admin:index")
+        user = self.user1
+        teacher1 = AchTeacher.objects.create(user=user, club_name="Club 1")
         request = self.factory.get(url)
+        request.user = user
         response = index(request)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No achievements are available")  # Expect a message indicating no achievements
