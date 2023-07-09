@@ -53,11 +53,3 @@ lint-test-job:
       codequality: codeclimate.json
     when: always
     expire_in: 30 days
-
-
-deploy-job:
-  stage: deploy
-  environment: production
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
