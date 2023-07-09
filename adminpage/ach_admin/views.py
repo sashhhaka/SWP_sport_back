@@ -8,7 +8,10 @@ from .models import Achievement, AchTeacher
 
 # view for achievements
 def index(request):
-    teacher = AchTeacher.objects.get(user=request.user)
+    try:
+        teacher = AchTeacher.objects.get(user=request.user)
+    except AchTeacher.DoesNotExist:
+        raise Http404("You do not have access to achievement functionality.")
     achievement_list = Achievement.objects.filter(assigned_coaches__in=[teacher])
     context = {"achievement_list": achievement_list}
     return render(request, "ach_admin/index.html", context)

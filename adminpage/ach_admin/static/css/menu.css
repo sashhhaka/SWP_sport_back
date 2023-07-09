@@ -1,6 +1,7 @@
 .menu {
     /*background-color: rgba(0, 17, 94, 0.96);*/
     background-color: rgba(0,13,70, 0.9);
+    background-color: rgb(9, 47, 87);
     display: flex;
     align-items: center;
     /*justify-content:space-around;*/
