@@ -7,7 +7,7 @@ from accounts.models import User
 from django.contrib.auth.models import Group
 
 from .models import Achievement, AchTeacher, AchStudent, \
-    AchievementAchTeacher, CurrentAchievementAchStudent, FinishedAchievementAchStudent
+    AchievementAchTeacher, CurrentAchievementAchStudent, FinishedAchievementAchStudent, AchievementAchStudent
 from .views import index
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
@@ -49,8 +49,8 @@ class AchievementModelTests(TestCase):
         image_file.close()
         image = SimpleUploadedFile("img.png", image_data, content_type="image/png")
         self.achievement = Achievement.objects.create(title="Test Achievement", icon=image)
-        self.user1 = User.objects.create_user(email="user1@innopolis,university", password="password1")
-        self.user2 = User.objects.create_user(email="user2@innopolis,university", password="password2")
+        self.user1 = User.objects.create_user(email="user1@innopolis.university", password="password1")
+        self.user2 = User.objects.create_user(email="user2@innopolis.university", password="password2")
 
     def unique_achievement_name(self):
         """
@@ -99,6 +99,25 @@ class AchievementModelTests(TestCase):
         self.assertEqual(teacher2.achievementachteacher_set.first().achievement, achievement)
 
         logger.info(f"test_achievement_ach_teacher_relation test: passed")
+
+    def test_mark_student_as_finished_method(self):
+        user1 = self.user1
+        # Create Group "Students" and register into it the two users
+        group = Group.objects.create(name="Students", verbose_name="Students")
+        group.user_set.add(user1)
+        student1 = AchStudent.objects.create(user=user1)
+        achievement = self.achievement
+        # Create CurrentAchievementAchStudent instances
+        current_achievement_ach_student1 = AchievementAchStudent.objects.create(
+            achievement=achievement, ach_student=student1, status="subscribed")
+        # Mark student as finished
+        achievement.mark_student_as_finished(student1)
+
+        # Check if the student is marked as finished
+        # find that student in the list of finished students and confirm its status is "finished"
+        self.assertEqual(achievement.achievementachstudent_set.get(ach_student=student1).status, "finished")
+
+
 
     def test_achievement_ach_student_relation(self):
         """
