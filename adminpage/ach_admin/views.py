@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
-
+import json
 
 from .models import Achievement, AchTeacher
 
@@ -15,6 +15,15 @@ def index(request):
     achievement_list = Achievement.objects.filter(assigned_coaches__in=[teacher])
     context = {"achievement_list": achievement_list}
     return render(request, "ach_admin/index.html", context)
+
+def move_element(request):
+    data = json.loads(request.body)
+    ids = data.get('ids','')
+    [object_id, element_id] = ids.split("/%/")
+    my_object = get_object_or_404(Achievement, id=object_id)
+    element_to_move = my_object.students.get(id=element_id)
+    my_object.mark_student_as_finished(element_to_move)
+    return HttpResponse("You're voting on question")
 
 
 def events(request):

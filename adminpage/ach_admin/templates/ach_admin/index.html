@@ -69,27 +69,36 @@
         <div class="achievements-grid">
         {% for achievement in achievement_list %}
 
-            <li>
-                <div class="achievements">
-                    <button class="achievement_short_info" id="{{ achievement.id }}" class="btn btn-primary"
-                            data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#exampleModalToggle"
-                            role="button"
-                            data-id="{{ achievement.id }}"
-                            data-imgurl="{{ achievement.icon.url }}"
-                            data-name="{{ achievement.title }}"
-                            data-sub_students="{{ achievement.subscribed_students.all }}"
-                            data-fin_students="{{ achievement.finished_students.all }}"
-                            data-ass_coaches="{{ achievement.assigned_coaches.all }}">
-                        <div class="icon">
-                            <img class="achiev-img" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon">
-                        </div>
-                        <div class="achievement-name">
-                            {{ achievement.title }}
-                        </div>
-                    </button>
-                </div>
-            </li>
-        {% endfor %}
+        <li>
+            <div class="achievements">
+                <button class="achievement_short_info" id= "{{ achievement.id }}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#exampleModalToggle" role="button"
+                data-id="{{ achievement.id }}"
+                data-imgurl="{{ achievement.icon.url }}"
+                data-name="{{ achievement.title }}"
+                data-sub_students = "{{ achievement.subscribed_students }}"
+                data-fin_students = "{{ achievement.finished_students }}"
+                data-ass_coaches = "{{ achievement.assigned_coaches.all }}">
+                {% for student in achievement.subscribed_students %}
+                    <div class= "{{ achievement.title }}" style="display: none;" id="">{{ student.id }}</div>
+                {% endfor %}
+                <script>
+                    var elements = document.getElementsByClassName('{{ achievement.title }}');
+                    for (let i = 0; i < elements.length; i++) {
+                      const element = elements[i];
+                      const id = '{{ achievement.title }}' + i;
+                      element.setAttribute('id', id);
+                    }
+                </script>
+                    <div class="icon">
+                        <img class="achiev-img" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon">
+                    </div>
+                    <div class="achievement-name">
+                        {{ achievement.title }}
+                    </div>
+                </button>
+            </div>
+        </li>
+    {% endfor %}
         </div>
     </ul>
 {% else %}
