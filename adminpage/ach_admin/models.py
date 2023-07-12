@@ -47,6 +47,14 @@ class Achievement(models.Model):
             # mark as finished
             ach_student.status = 'finished'
             ach_student.save()
+    def mark_student_as_subscribed(self, student):
+        # check if student is subscribed
+        if self.students.filter(achievementachstudent__status='finished').filter(id=student.id).exists():
+            # get the student
+            ach_student = AchievementAchStudent.objects.get(achievement=self, ach_student=student, status='finished')
+            # mark as finished
+            ach_student.status = 'subscribed'
+            ach_student.save()
 
 
 

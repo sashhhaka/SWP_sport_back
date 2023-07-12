@@ -79,14 +79,20 @@
                 data-fin_students = "{{ achievement.finished_students }}"
                 data-ass_coaches = "{{ achievement.assigned_coaches.all }}">
                 {% for student in achievement.subscribed_students %}
-                    <div class= "{{ achievement.title }}" style="display: none;" id="">{{ student.id }}</div>
+                    <div class= "{{ achievement.title }}" style="display: none;" id="l">{{ student.id }}</div>
+                {% endfor %}
+                {% for student in achievement.finished_students %}
+                    <div class= "{{ achievement.title }}" style="display: none;" id="r">{{ student.id }}</div>
                 {% endfor %}
                 <script>
                     var elements = document.getElementsByClassName('{{ achievement.title }}');
+                    var k = 0;
                     for (let i = 0; i < elements.length; i++) {
                       const element = elements[i];
-                      const id = '{{ achievement.title }}' + i;
-                      element.setAttribute('id', id);
+                      id = 0;
+                      if (element.getAttribute("id") == "r"){id ='{{ achievement.title }}' + k;k = k + 1;}
+                      else{id ='{{ achievement.title }}' + i;}
+                      element.setAttribute('id', element.getAttribute("id") + id);
                     }
                 </script>
                     <div class="icon">

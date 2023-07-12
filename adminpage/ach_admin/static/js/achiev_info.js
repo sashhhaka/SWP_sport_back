@@ -126,12 +126,12 @@ var kaleka = 0;
 
   var v = '';
   for (var i = 1; i < sub_students.length; i++) {
-    v += '<div class="students_list">' +
+      v += '<div class="students_list">' +
       '<p style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">' +
       '<span style="display: inline-block; width: 80%; vertical-align: middle;">' +
       sub_students[i].split('>')[0] +
       '</span>' +
-      '<input class="button_for_students" id="button' + name + (i - 1).toString() + '" type="checkbox" style="display: inline-block; width: 20%; vertical-align: middle;">' +
+      '<input class="button_for_students" id="lbutton' + name + (i - 1).toString() + '" type="checkbox" style="display: inline-block; width: 20%; vertical-align: middle;">' +
       '</p>' +
       '</div>';
   }
@@ -143,7 +143,7 @@ var kaleka = 0;
   if (v !== '') {
     for (var i = 1; i < sub_students.length; i++) {
   (function (index) {
-    var checkbox = document.getElementById('button' + name + (index - 1).toString());
+    var checkbox = document.getElementById('lbutton' + name + (index - 1).toString());
 
     checkbox.addEventListener('change', function () {
       // Get the CSRF token value from the cookies
@@ -156,14 +156,19 @@ var kaleka = 0;
       var xhr = new XMLHttpRequest();
       xhr.onload = function () {
         if (xhr.status === 200) {
-          updateModalField(); // Call the function to update the modal field
+          //updateModalField(); // Call the function to update the modal field
         }
       };
       kaleka = index-1;
+      if (this.checked) {
       xhr.open('POST', '/ach_admin/move/', true);
+      }
+      else{
+      xhr.open('POST', '/ach_admin/move2/', true);
+      }
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.setRequestHeader('X-CSRFToken', csrftoken); // Set the CSRF token in the request header
-      xhr.send(JSON.stringify({ ids: id + '/%/' + document.getElementById(name + (index - 1).toString()).innerHTML }));
+      xhr.send(JSON.stringify({ ids: id + '/%/' + document.getElementById("l" + name + (index - 1).toString()).innerHTML }));
 
 
     });
@@ -189,12 +194,71 @@ var kaleka = 0;
 
   var v = '';
   for (var i = 1; i < fin_students.length; i++) {
-    v += '<p class="students_list" style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">' + fin_students[i].split('>')[0] + '</p>';
-  }
+      v += '<div class="students_list">' +
+      '<p style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">' +
+      '<span style="display: inline-block; width: 80%; vertical-align: middle;">' +
+      fin_students[i].split('>')[0] +
+      '</span>' +
+      '<input class="button_for_students" id="rbutton' + name + (i - 1).toString() + '" type=checkbox checked=checked style="display: inline-block; width: 20%; vertical-align: middle;">' +
+      '</p>' +
+      '</div>';
+     }
   if (v === '') {
     v = '<p class="students_list" style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">No finished students</p>';
   }
   document.getElementById('fin_students_list').innerHTML = v;
+
+if (v !== '') {
+    for (var i = 1; i < fin_students.length; i++) {
+  (function (index) {
+    var checkbox = document.getElementById('rbutton' + name + (index - 1).toString());
+
+
+    checkbox.addEventListener('change', function () {
+
+      // Get the CSRF token value from the cookies
+      var csrftoken = getCookie('csrftoken');
+
+      // Send an AJAX request to the Django backend
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          //updateModalField(); // Call the function to update the modal field
+        }
+      };
+      kaleka = index-1;
+
+      if (this.checked) {
+      xhr.open('POST', '/ach_admin/move/', true);
+      }
+      else{
+      xhr.open('POST', '/ach_admin/move2/', true);
+      }
+
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('X-CSRFToken', csrftoken); // Set the CSRF token in the request header
+      xhr.send(JSON.stringify({ ids: id + '/%/' + document.getElementById("r" + name + (index - 1).toString()).innerHTML }));
+
+    });
+  })(i);
+}
+
+    // Function to get the CSRF cookie value
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + '=') {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  }
 
   var v = '';
   for (var i = 1; i < ass_coaches.length; i++) {
