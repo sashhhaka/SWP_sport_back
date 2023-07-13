@@ -1,6 +1,6 @@
 # [SWP] Sport Achievements: functionality for coaches
 
-![Pipeline](https://gitlab.com/%{project_path}/badges/%{default_branch}/pipeline.svg)
+![Pipeline](https://gitlab.pg.innopolis.university/%{project_path}/badges/main/pipeline.svg)
 
 ## Project description
 The main idea of Sport Achievements project is to add achievements to Innopolis University Sport website. 
