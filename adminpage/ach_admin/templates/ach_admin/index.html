@@ -140,6 +140,15 @@
                                onclick="viewDivS()">
 
                         <div class="students_sub_and_fin" id="students_sub_and_fin" style="display: none;">
+                            <div>
+                                <form class="search" action="" method="get">
+                                    <input class="search_block" id="search_block" name="s"  placeholder="Search..." type="search">
+                                    <button class="search_button" type="button" onclick="search_students()">
+                                        <img class="search_img" src="../static/images/search.png" alt="">
+                                    </button>
+                                </form></div>
+                            <div></div>
+
                             <div class="sub_students_info">
                                 <div class="available_sub_students_block">
                                     <div class="available_sub_students">
@@ -196,7 +205,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../../../static/js/achiev_info.js"></script>
 <script src="../../../static/js/open_list.js"></script>
-
+<script src="../../../static/js/search.js"></script>
 
 </body>
 </html>
