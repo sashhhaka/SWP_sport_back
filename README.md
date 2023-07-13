@@ -17,8 +17,8 @@ The project was developed as a separate Django application (ach_admin) within th
 
 For development installation follow the steps described in the Project Installatoin section.
 
-The whole project was deployed separately from current production version of Sport website: 
-[test deployed project](http://89.223.121.66/admin/login/?next=/admin/). 
+The whole project was deployed separately from current production version of Sport website. 
+Test deployed project [here](http://89.223.121.66/admin/login/?next=/admin/). 
 
 user: t.testovich@innopolis.university
 
