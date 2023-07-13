@@ -3,7 +3,6 @@ from django.urls import reverse
 
 from accounts.models import User
 
-# import Group from Authentification and Authorization
 from django.contrib.auth.models import Group
 
 from .models import Achievement, AchTeacher, AchStudent, \
