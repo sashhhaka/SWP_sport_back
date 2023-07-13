@@ -6,10 +6,14 @@ $('#exampleModalToggle').on('show.bs.modal', function (event) {
   var sub_students = button.data('sub_students').split('Student: ');
   var fin_students = button.data('fin_students').split('Student: ');
   var ass_coaches = button.data('ass_coaches').split('Teacher: ');
+  var short_description = button.data('short_description');
+  var description = button.data('description');
 
   var modal = $(this);
   modal.find('.achiev-img').attr('src', url);
   modal.find('.achievement-name').text(name);
+  modal.find('.short_description').text(short_description)
+  modal.find('.description').text(description)
 
 
 // Function to update the modal field

@@ -1,6 +1,6 @@
 body {
     padding-top: 80px;
-    background: rgb(29,253,32);
+    background: rgb(29, 253, 32);
     background: linear-gradient(94deg, rgba(29, 253, 32, 0.4) 20%, rgba(62, 93, 138, 0.4) 40%, rgba(58, 86, 131, 0.4) 60%); /* Add a third color stop */
     background: linear-gradient(94deg, rgba(81, 203, 30, 0.5) 15%, rgba(35, 154, 128, 0.49) 40%, rgba(31, 90, 143, 0.5) 60%); /* Add a third color stop */
 
@@ -8,6 +8,7 @@ body {
     /*background: rgb(128, 188, 39);*/
     /*background: linear-gradient(94deg, rgba(128, 188, 39, 0.2) 21%, rgba(20, 161, 183, 0.4) 83%);*/
 }
+
 .achievements {
     display: flex;
     flex-direction: column;
@@ -15,12 +16,20 @@ body {
 }
 
 .achievements-grid {
-  display: grid;
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 
-  grid-column-gap: 5px; /* Adjust the horizontal gap as desired */
-  grid-row-gap: 3px; /* Adjust the vertical gap as desired */
+    grid-column-gap: 5px; /* Adjust the horizontal gap as desired */
+    grid-row-gap: 3px; /* Adjust the vertical gap as desired */
+    margin-right: 50%;
 }
+
+@media (max-width: 1920px) {
+    .achievements-grid {
+        margin-right: 40%;
+    }
+}
+
 
 
 .achievements-button {
@@ -28,7 +37,7 @@ body {
     height: 53px;
     position: relative;
     /*background-color: rgba(143, 191, 182, 0.9);*/
-    background: rgba(145,203,163, 0.3);
+    background: rgba(145, 203, 163, 0.3);
     border-radius: 5px 5px 5px 5px;
     /*border-radius: 30px;*/
     overflow: hidden;
@@ -39,15 +48,13 @@ body {
     width: 120px;
     position: relative;
     /*background-color: rgba(143, 191, 182, 0.9);*/
-    background: rgba(145,203,163, 0.3);
+    background: rgba(145, 203, 163, 0.3);
     border-radius: 5px 5px 5px 5px;
     /*border-radius: 20px;*/
     /*text-shadow: 0 0 20px rgb(255, 255, 255);*/
     /*border-bottom-color: #d70909;*/
     overflow: hidden;
 }
-
-
 
 
 .new {
@@ -69,13 +76,15 @@ body {
     font-weight: 500;
     cursor: pointer;
     font-size: 20px;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
 .new-text {
     margin: 0;
     margin-left: 20px;
     box-sizing: border-box;
 }
+
 .achievement_short_info {
     display: grid;
     grid-template-columns: 170px 1fr;
@@ -98,15 +107,23 @@ body {
     /*box-shadow: 0 0 5px 2px rgba(150, 150, 180);*/
     transform: translate(-2px, 1px);
 }
+
 .achievement-name {
     width: fit-content;
     align-items: start;
     margin-top: 18px;
     color: rgba(0, 27, 86, 0.9);
     font-size: 20px;
-    font-weight: 500;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+.achievement-description {
+    margin-top: 5px;
+    font-size: 16px;
+    color: rgb(253, 253, 254);
+}
+
 .icon {
     display: flex;
     justify-content: center;
@@ -120,6 +137,7 @@ body {
     margin-top: 18px;
     margin-left: 15px;
 }
+
 .achiev-img {
     width: 90px;
     height: 90px;

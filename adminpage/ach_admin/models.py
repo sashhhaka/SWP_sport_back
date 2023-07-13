@@ -4,6 +4,9 @@ from django.utils import timezone
 from django.conf import settings
 import uuid
 from django.core.exceptions import ValidationError
+import re
+from django.utils.html import mark_safe
+
 
 
 # base models
@@ -14,16 +17,53 @@ def get_achievement_icon_path(instance, filename):
            f'{instance.title}/{uuid.uuid4()}.{ext}'
 
 
-class Achievement(models.Model):
-    title = models.CharField(max_length=200, unique=True, blank=False)
-    icon = models.ImageField(upload_to="ach_admin/acheivements", default=None)
-    assigned_coaches = models.ManyToManyField('AchTeacher', through='AchievementAchTeacher', blank=True, )
-    # subscribed_students = models.ManyToManyField('AchStudent', through='CurrentAchievementAchStudent', blank=True)
-    # finished_students = models.ManyToManyField('AchStudent', through='FinishedAchievementAchStudent', blank=True,
-    #                                            related_name='finished_students')
+def validate_achievement_text(value):
+    if not re.match(r'^[a-zA-Z0-9,.!? ]*$', value):
+        raise ValidationError('Description should contain only English characters.')
 
-    students = models.ManyToManyField('AchStudent', through='AchievementAchStudent', blank=True,
-                                      related_name='students')
+
+# for selection toggle
+class AchievementIcon(models.Model):
+    image = models.ImageField(upload_to='ach_admin/achievements')
+
+    def __str__(self):
+        return self.image.name
+
+
+class Achievement(models.Model):
+    title = models.CharField(
+        max_length=200,
+        unique=True,
+        blank=False,
+        validators=[validate_achievement_text],
+    )
+    icon = models.ImageField(
+        upload_to="ach_admin/achievements",
+        default=None
+    )
+    # icon = models.ForeignKey(AchievementIcon, on_delete=models.SET_NULL, null=True, blank=True)
+
+    short_description = models.CharField(
+        blank=True,
+        max_length=300,
+        validators=[validate_achievement_text],
+    )
+    description = models.TextField(
+        blank=True,
+        default='No description was set by the coach.',
+        max_length=1000,
+    )
+    assigned_coaches = models.ManyToManyField(
+        'AchTeacher',
+        through='AchievementAchTeacher',
+        blank=True,
+    )
+    students = models.ManyToManyField(
+        'AchStudent',
+        through='AchievementAchStudent',
+        blank=True,
+        related_name='students'
+    )
 
     def __str__(self):
         return self.title
@@ -54,6 +94,10 @@ class Achievement(models.Model):
             # mark as finished
             ach_student.status = 'subscribed'
             ach_student.save()
+
+
+
+
 
 
 class AchTeacher(models.Model):
