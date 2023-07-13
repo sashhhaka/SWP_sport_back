@@ -14,8 +14,6 @@ def get_achievement_icon_path(instance, filename):
            f'{instance.title}/{uuid.uuid4()}.{ext}'
 
 
-# models.py
-
 class Achievement(models.Model):
     title = models.CharField(max_length=200, unique=True, blank=False)
     icon = models.ImageField(upload_to="ach_admin/acheivements", default=None)
@@ -24,7 +22,8 @@ class Achievement(models.Model):
     # finished_students = models.ManyToManyField('AchStudent', through='FinishedAchievementAchStudent', blank=True,
     #                                            related_name='finished_students')
 
-    students = models.ManyToManyField('AchStudent', through='AchievementAchStudent', blank=True, related_name='students')
+    students = models.ManyToManyField('AchStudent', through='AchievementAchStudent', blank=True,
+                                      related_name='students')
 
     def __str__(self):
         return self.title
@@ -38,7 +37,6 @@ class Achievement(models.Model):
     def finished_students(self):
         return self.students.filter(achievementachstudent__status='finished')
 
-    # function to mark a subcribed student as finished
     def mark_student_as_finished(self, student):
         # check if student is subscribed
         if self.students.filter(achievementachstudent__status='subscribed').filter(id=student.id).exists():
@@ -47,7 +45,8 @@ class Achievement(models.Model):
             # mark as finished
             ach_student.status = 'finished'
             ach_student.save()
-    def mark_student_as_subscribed(self, student):
+
+    def mark_student_as_sub(self, student):
         # check if student is subscribed
         if self.students.filter(achievementachstudent__status='finished').filter(id=student.id).exists():
             # get the student
@@ -55,10 +54,6 @@ class Achievement(models.Model):
             # mark as finished
             ach_student.status = 'subscribed'
             ach_student.save()
-
-
-
-
 
 
 class AchTeacher(models.Model):
@@ -87,8 +82,6 @@ class AchStudent(models.Model):
         verbose_name_plural = 'Students with Achievements'
 
 
-
-
 class AchievementAchTeacher(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     ach_teacher = models.ForeignKey(AchTeacher, on_delete=models.CASCADE)
@@ -100,7 +93,6 @@ class AchievementAchTeacher(models.Model):
     class Meta:
         verbose_name = 'Assigned Achievement'
         verbose_name_plural = 'Assigned Achievements'
-
 
 
 class AchievementAchStudent(models.Model):
@@ -130,12 +122,12 @@ class AchievementAchStudent(models.Model):
     def save(self, *args, **kwargs):
         if self.status != 'finished':
             self.date_achieved = None
+        if self.status == 'finished' and not self.date_achieved:
+            self.date_achieved = datetime.date.today()
         super().save(*args, **kwargs)
 
     def is_achieved(self):
         return self.status == 'finished'
-
-
 
     is_achieved.boolean = True
     is_achieved.short_description = 'Achieved'
@@ -143,9 +135,6 @@ class AchievementAchStudent(models.Model):
     def clean(self):
         if self.status == 'finished' and not self.date_achieved:
             raise ValidationError({'date_achieved': 'This field is required for finished achievements.'})
-
-
-
 
 
 class CurrentAchievementAchStudent(models.Model):
@@ -173,8 +162,7 @@ class FinishedAchievementAchStudent(models.Model):
     def __str__(self):
         return ""
 
+
 """
 Events models
 """
-
-
