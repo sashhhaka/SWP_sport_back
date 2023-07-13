@@ -13,7 +13,12 @@ The project is licensed under MIT License (X11 license). See LICENSE file for mo
 (TODO: Demo screenshots)
 
 ## How to use
-You should install the project on your device, following the steps described in the Project Installation section. Otherwise, you can see the [deployed project](http://89.223.121.66/admin/login/?next=/admin/). 
+The project was developed as a separate Django application (ach_admin) within the adminpage part in the Innopolis Sport website project. The developed application is configured to be launched integrated in Innopolis Sport website.
+
+For development installation follow the steps described in the Project Installatoin section.
+
+The whole project was deployed separately from current production version of Sport website: 
+[test deployed project](http://89.223.121.66/admin/login/?next=/admin/). 
 
 user: t.testovich@innopolis.university
 
@@ -35,10 +40,10 @@ Note: this user does not have all the admin functionality
 2. From coach page
     * See all achievements available for this coach
     * See achievement cards
-    * Mark achievements as finished for particular students
+    * Mark achievements as finished for particular students or return a student to a subscribed status.
 
 ## Project Installation
-This part was taken from the original Sport site repository
+This part was taken from the original Sport website repository
 
 ### Requirements:
 * Python3
@@ -49,7 +54,7 @@ This part was taken from the original Sport site repository
 2. Go to repo folder
 3. `pip3 install -r ./adminpage/requirements.txt`. If not everything works at this stage (for example, some packages do not install), you still can move to the next step.
 4. To start server 
-    1. Rename file: `example.env` to `.env`. If you do not have .env file, install it direactly from a branch which has it
+    1. Rename file: `example.env` to `.env`. If you do not have .env file, install it direactly from master branch.
     2. From repo folder: `docker-compose -f ./compose/docker-compose.yml up`. Docker on your computer should be opened beforehand.
 5. To create superuser and make migrations
     1. `docker exec -it sport_adminpanel bash`
@@ -59,9 +64,7 @@ This part was taken from the original Sport site repository
 
 
 ##  Technologies used
-* Python
-* Docker
-* HTML
-* CSS
-* JavaScript
+* Python, Django framework
+* HTML, CSS, JavaScript
 * PostgreSQL
+* Docker
