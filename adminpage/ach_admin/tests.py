@@ -3,7 +3,6 @@ from django.urls import reverse
 
 from accounts.models import User
 
-# import Group from Authentification and Authorization
 from django.contrib.auth.models import Group
 
 from .models import Achievement, AchTeacher, AchStudent, \
@@ -117,7 +116,22 @@ class AchievementModelTests(TestCase):
         # find that student in the list of finished students and confirm its status is "finished"
         self.assertEqual(achievement.achievementachstudent_set.get(ach_student=student1).status, "finished")
 
+    def test_mark_student_as_subscribed_method(self):
+        user1 = self.user1
+        # Create Group "Students" and register into it the two users
+        group = Group.objects.create(name="Students", verbose_name="Students")
+        group.user_set.add(user1)
+        student1 = AchStudent.objects.create(user=user1)
+        achievement = self.achievement
+        # Create CurrentAchievementAchStudent instances
+        current_achievement_ach_student1 = AchievementAchStudent.objects.create(
+            achievement=achievement, ach_student=student1, status="finished")
+        # Mark student as subscribed
+        achievement.mark_student_as_subscribed(student1)
 
+        # Check if the student is marked as subscribed
+        # find that student in the list of subscribed students and confirm its status is "subscribed"
+        self.assertEqual(achievement.achievementachstudent_set.get(ach_student=student1).status, "subscribed")
 
     def test_achievement_ach_student_relation(self):
         """

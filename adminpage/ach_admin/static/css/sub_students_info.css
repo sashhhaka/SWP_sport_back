@@ -43,7 +43,6 @@
 }
 
 .ass_coaches_info {
-    opacity: 10px;
     display: grid;
     width: 350px;
     height: fit-content;
@@ -56,7 +55,6 @@
 
 .fin_students_info,
 .sub_students_info {
-    opacity: 10px;
     display: grid;
     width: 350px;
     height: fit-content;
@@ -66,6 +64,8 @@
     background: none;
     border: none;
 }
+
+
 
 .available_ass_coaches,
 .available_fin_students,
@@ -148,3 +148,66 @@
 .students-list {
     padding-left: 0px;
 }
+
+input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+.button_for_send_students {    background-color: rgb(134, 184, 167, 0.5);
+    border-radius: 30px;
+    border: 2px solid rgba(0, 27, 86, 0.8);
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+}
+.button_for_send_students:hover {
+    opacity: 0.7;
+}
+.search {
+    position: absolute;
+    width: 300px;
+    margin-left: 30px;
+}
+.search_block,
+.search_button {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+}
+.search_block {
+    width: 100%;
+    height: 42px;
+    background-color: rgb(134, 184, 167, 0.5);
+    border-radius: 30px;
+    border: 2px solid rgba(0, 27, 86, 0.8);
+    padding-left: 15px;
+}
+.search_button {
+    margin-right: 10px;
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    padding: 0px 0px 0px 0px;
+    top: 8px;
+    right: 8px;
+    background-color: rgb(134, 184, 167, 0.5);
+    border: 2px solid rgba(0, 27, 86, 0.8);
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+.search_img {
+    height: 21px;
+    margin-bottom: 5px;
+    opacity: 0.7;
+}
+.search_img:hover {
+    opacity: 0.4;
+}
+
+.students_sub_and_fin {
+    margin-top: 10px;
+    grid-template-rows: 30px 1fr;
+    grid-template-columns: 400px 400px;
+}
+
