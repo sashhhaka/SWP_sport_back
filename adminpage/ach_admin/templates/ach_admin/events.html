@@ -32,8 +32,6 @@
                 Admin
             </button>
         {% endif %}
-
-
     </div>
 
 
@@ -41,7 +39,7 @@
         <button class="events-button" onclick="location.href = 'http://localhost/ach_admin'">
             Achievements
         </button>
-        <button class="events-button-enabled">
+        <button class="events-button-enabled" >
             Events
         </button>
     </div>
@@ -52,6 +50,7 @@
         </button>
         <button class="club-button">
             Club name
+
         </button>
     </div>
 </div>
@@ -68,27 +67,42 @@
         <div class="achievements-grid">
         {% for achievement in achievement_list %}
 
-            <li>
-                <div class="achievements">
-                    <button class="achievement_short_info" id="{{ achievement.id }}" class="btn btn-primary"
-                            data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#exampleModalToggle"
-                            role="button"
-                            data-id="{{ achievement.id }}"
-                            data-imgurl="{{ achievement.icon.url }}"
-                            data-name="{{ achievement.title }}"
-                            data-sub_students="{{ achievement.subscribed_students.all }}"
-                            data-fin_students="{{ achievement.finished_students.all }}"
-                            data-ass_coaches="{{ achievement.assigned_coaches.all }}">
-                        <div class="icon">
-                            <img class="achiev-img" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon">
-                        </div>
-                        <div class="achievement-name">
-                            {{ achievement.title }}
-                        </div>
-                    </button>
-                </div>
-            </li>
-        {% endfor %}
+        <li>
+            <div class="achievements">
+                <button class="achievement_short_info" id= "{{ achievement.id }}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#exampleModalToggle" role="button"
+                data-id="{{ achievement.id }}"
+                data-imgurl="{{ achievement.icon.url }}"
+                data-name="{{ achievement.title }}"
+                data-sub_students = "{{ achievement.subscribed_students }}"
+                data-fin_students = "{{ achievement.finished_students }}"
+                data-ass_coaches = "{{ achievement.assigned_coaches.all }}">
+                {% for student in achievement.subscribed_students %}
+                    <div class= "{{ achievement.title }}" style="display: none;" id="l">{{ student.id }}</div>
+                {% endfor %}
+                {% for student in achievement.finished_students %}
+                    <div class= "{{ achievement.title }}" style="display: none;" id="r">{{ student.id }}</div>
+                {% endfor %}
+                <script>
+                    var elements = document.getElementsByClassName('{{ achievement.title }}');
+                    var k = 0;
+                    for (let i = 0; i < elements.length; i++) {
+                      const element = elements[i];
+                      id = 0;
+                      if (element.getAttribute("id") == "r"){id ='{{ achievement.title }}' + k;k = k + 1;}
+                      else{id ='{{ achievement.title }}' + i;}
+                      element.setAttribute('id', element.getAttribute("id") + id);
+                    }
+                </script>
+                    <div class="icon">
+                        <img class="achiev-img" src="{{ achievement.icon.url }}" alt="{{ achievement.title }} Icon">
+                    </div>
+                    <div class="achievement-name">
+                        {{ achievement.title }}
+                    </div>
+                </button>
+            </div>
+        </li>
+    {% endfor %}
         </div>
     </ul>
 {% else %}
@@ -124,6 +138,15 @@
                                onclick="viewDivS()">
 
                         <div class="students_sub_and_fin" id="students_sub_and_fin" style="display: none;">
+                            <div>
+                                <form class="search" action="" method="get">
+                                    <input class="search_block" id="search_block" name="s"  placeholder="Search..." type="search">
+                                    <button class="search_button" type="button" onclick="search_students()">
+                                        <img class="search_img" src="../static/images/search.png" alt="">
+                                    </button>
+                                </form></div>
+                            <div></div>
+
                             <div class="sub_students_info">
                                 <div class="available_sub_students_block">
                                     <div class="available_sub_students">
@@ -180,7 +203,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../../../static/js/achiev_info.js"></script>
 <script src="../../../static/js/open_list.js"></script>
-
+<script src="../../../static/js/search.js"></script>
 
 </body>
 </html>
