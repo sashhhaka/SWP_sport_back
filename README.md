@@ -4,6 +4,7 @@
 
 ## Project description
 The main idea of Sport Achievements project is to add achievements to Innopolis University Sport website. 
+
 This part of the project is directed to coaches functionality specifically. Coaches should be able to mark achievements as completed, when a student shows them their progress.
 
 ## Demo
@@ -11,8 +12,11 @@ This part of the project is directed to coaches functionality specifically. Coac
 
 ## How to use
 You should install the project on your device, following the steps described in the Project Installation section. Otherwise, you can see the [deployed project](http://89.223.121.66/admin/login/?next=/admin/). 
+
 user: t.testovich@innopolis.university
+
 password: pqowieur
+
 Note: this user does not have all the admin functionality
 
 ## Features list
