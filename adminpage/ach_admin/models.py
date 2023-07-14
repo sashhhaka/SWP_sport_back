@@ -52,7 +52,6 @@ class Achievement(models.Model):
         blank=True,
         default='No description was set by the coach.',
         max_length=1000,
-        validators=[],
     )
     assigned_coaches = models.ManyToManyField(
         'AchTeacher',

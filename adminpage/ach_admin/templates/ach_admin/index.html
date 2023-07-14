@@ -77,7 +77,9 @@
                 data-name="{{ achievement.title }}"
                 data-sub_students = "{{ achievement.subscribed_students }}"
                 data-fin_students = "{{ achievement.finished_students }}"
-                data-ass_coaches = "{{ achievement.assigned_coaches.all }}">
+                data-ass_coaches = "{{ achievement.assigned_coaches.all }}"
+                data-short-description = "{{ achievement.short_description }}"
+                data-description = "{{ achievement.description }}">
                 {% for student in achievement.subscribed_students %}
                     <div class= "{{ achievement.title }}" style="display: none;" id="l">{{ student.id }}</div>
                 {% endfor %}
@@ -128,7 +130,6 @@
                         </div>
                         <div class="name_and_description">
                             <h5 class="achievement-name" href="/ach_admin/{{ achievement.id }}/">
-
                             </h5>
                             <div class="description">
                                 Description: {{ achievement.description }}
