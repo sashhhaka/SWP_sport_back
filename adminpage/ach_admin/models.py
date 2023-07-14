@@ -7,8 +7,6 @@ from django.core.exceptions import ValidationError
 import re
 from django.utils.html import mark_safe
 
-
-
 # base models
 
 def get_achievement_icon_path(instance, filename):
@@ -96,10 +94,6 @@ class Achievement(models.Model):
             ach_student.save()
 
 
-
-
-
-
 class AchTeacher(models.Model):
     user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, default=None)
     club_name = models.CharField(max_length=200)
@@ -176,9 +170,6 @@ class AchievementAchStudent(models.Model):
     is_achieved.boolean = True
     is_achieved.short_description = 'Achieved'
 
-    def clean(self):
-        if self.status == 'finished' and not self.date_achieved:
-            raise ValidationError({'date_achieved': 'This field is required for finished achievements.'})
 
 
 class CurrentAchievementAchStudent(models.Model):
