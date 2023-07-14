@@ -1,7 +1,10 @@
-from django.contrib import admin
+
 from sport.admin.site import site
+from django.contrib import admin
 from django.urls import reverse
-from django.shortcuts import redirect
+from django.utils.html import format_html
+from django.forms.models import BaseInlineFormSet
+from datetime import date
 
 admin.site.site_url = 'http://127.0.0.1:8000/ach_admin/'
 
@@ -9,12 +12,12 @@ from .models import Achievement, AchTeacher, AchStudent, AchievementAchStudent
 from .forms import AchievementForm
 
 
-'''Logic for achievement statuses'''
 
 from django import forms
 from .models import AchievementAchStudent
 
 
+'''Logic for achievement statuses'''
 class AchievementAchStudentForm(forms.ModelForm):
     class Meta:
         model = AchievementAchStudent
@@ -35,14 +38,9 @@ class AchievementAchStudentAdmin(admin.ModelAdmin):
 
 site.register(AchievementAchStudent, AchievementAchStudentAdmin)
 
-
 """Logic for achievement statuses achstudents"""
 
-from django.contrib import admin
-from django.urls import reverse
-from django.utils.html import format_html
 
-from .models import AchStudent, AchievementAchStudent
 
 
 class AchievementAchStudentInline(admin.TabularInline):
@@ -64,16 +62,40 @@ class AchievementAchStudentInline(admin.TabularInline):
     assign_button.short_description = 'Assign'
 
 
-
 """Inlines for ach_student and ach_teacher
 Enable many-to-many relationship in admin page for them
 """
 
 
+
+
+class SubscribedStudentFormSet(BaseInlineFormSet):
+    """
+    Formset for subscribed students in the AchievementSubscribedStudent inline.
+    Sets the default status as 'subscribed' and initializes date_achieved as None.
+    """
+
+    def get_default_status(self):
+        return 'subscribed'
+
+    def get_form_kwargs(self, index):
+        kwargs = super().get_form_kwargs(index)
+        kwargs.setdefault('initial', {})
+        kwargs['initial']['status'] = self.get_default_status()
+        kwargs['initial']['date_achieved'] = None
+        return kwargs
+
+
 class AchievementSubscribedStudent(admin.TabularInline):
+    """
+    Inline for subscribed students in the Achievement admin page.
+    Uses the SubscribedStudentFormSet as the formset.
+    """
+
     model = Achievement.students.through
     extra = 1
     show_change_link = False
+    formset = SubscribedStudentFormSet
 
     class Meta:
         verbose_name = "Subscribed student"
@@ -86,10 +108,42 @@ class AchievementSubscribedStudent(admin.TabularInline):
         queryset = super().get_queryset(request)
         return queryset.filter(status='subscribed')
 
+    # fill the date_achieved with today date if status is changed to finished
+
+
+class FinishedStudentFormSet(BaseInlineFormSet):
+    """
+    Formset for finished students in the AchievementFinishedStudent inline.
+    Sets the default status as 'finished' and initializes date_achieved based on the instance's value or today's date.
+    """
+
+    def get_default_status(self):
+        return 'finished'
+
+    def get_form_kwargs(self, index):
+        kwargs = super().get_form_kwargs(index)
+        kwargs.setdefault('initial', {})
+        kwargs['initial']['status'] = self.get_default_status()
+
+        if kwargs['initial']['status'] == 'finished':
+            if 'instance' in kwargs:
+                kwargs['initial']['date_achieved'] = kwargs['instance'].date_achieved
+            else:
+                kwargs['initial']['date_achieved'] = date.today()
+
+        return kwargs
+
 
 class AchievementFinishedStudent(admin.TabularInline):
+    """
+    Inline for finished students in the Achievement admin page.
+    Uses the FinishedStudentFormSet as the formset.
+    """
+
     model = Achievement.students.through
     extra = 1
+    show_change_link = False
+    formset = FinishedStudentFormSet
 
     class Meta:
         verbose_name = "Finished student"
@@ -104,8 +158,9 @@ class AchievementFinishedStudent(admin.TabularInline):
 
     def clean(self, form, formset):
         super().clean(form, formset)
-        if form.cleaned_data.get('status') == 'finished' and not form.cleaned_data.get('date_achieved'):
-            form.add_error('date_achieved', 'This field is required for finished achievements.')
+        if form.cleaned_data.get('status') == 'finished':
+            # Remove the requirement for date_achieved
+            form.cleaned_data['date_achieved'] = None
 
 
 
@@ -148,6 +203,16 @@ class AchievementPage(admin.ModelAdmin):
                 inline_instances.append(inline)
         return inline_instances
 
+    def save_formset(self, request, form, formset, change):
+        if formset.model == Achievement.students.through:
+            instances = formset.save(commit=False)
+            for instance in instances:
+                if instance.status == 'finished' and not instance.date_achieved:
+                    instance.date_achieved = date.today()
+                instance.save()
+        else:
+            super().save_formset(request, form, formset, change)
+
     def get_subscribed_students(self, obj):
         return obj.subscribed_students().count() if obj.subscribed_students() else 'No subscribed students'
 
@@ -159,20 +224,12 @@ class AchievementPage(admin.ModelAdmin):
     get_finished_students.short_description = 'Finished Students Count'
 
 
-
 @admin.register(AchTeacher)
 class TeacherPage(admin.ModelAdmin):
     change_list_template = 'ach_admin/admin.html'
     model = AchTeacher
     inlines = [AchievementCoach, ]
     search_fields = ['user__email', 'user__first_name', 'user__last_name']
-
-    # def get_num_assigned_achievements(self, obj):
-    #     return obj.assigned_achievements.count()
-    #
-    # get_num_assigned_achievements.short_description = 'Assigned Achievements'
-    #
-    # list_display = ['user', 'get_num_assigned_achievements']
 
 
 @admin.register(AchStudent)
@@ -187,26 +244,17 @@ class StudentPage(admin.ModelAdmin):
 
     def get_inline_instances(self, request, obj=None):
         inline_instances = super().get_inline_instances(request, obj)
-        subscribed_inline = next((inline for inline in inline_instances if isinstance(inline, AchievementSubscribedStudent)),
-                                 None)
-        finished_inline = next((inline for inline in inline_instances if isinstance(inline, AchievementFinishedStudent)), None)
+        subscribed_inline = next(
+            (inline for inline in inline_instances if isinstance(inline, AchievementSubscribedStudent)),
+            None)
+        finished_inline = next(
+            (inline for inline in inline_instances if isinstance(inline, AchievementFinishedStudent)), None)
         if subscribed_inline and finished_inline:
             subscribed_inline.show_change_link = False
             finished_inline.show_change_link = False
             subscribed_inline.verbose_name_plural = "Current Student Achievements"
             finished_inline.verbose_name_plural = "Finished Student Achievements"
         return inline_instances
-
-    # def get_num_subscribed_achievements(self, obj):
-    #     return obj.achievementachstudent_set.filter(status='subscribed').count()
-    #
-    # def get_num_finished_achievements(self, obj):
-    #     return obj.achievementachstudent_set.filter(status='finished').count()
-    #
-    # get_num_subscribed_achievements.short_description = 'Subscribed Achievements'
-    # get_num_finished_achievements.short_description = 'Finished Achievements'
-    #
-    # list_display = ['user', 'get_num_subscribed_achievements', 'get_num_finished_achievements']
 
 
 site.register(Achievement, AchievementPage)
