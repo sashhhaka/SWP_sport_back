@@ -46,7 +46,7 @@
 }
 
 .name_and_description {
-    display: grid;
+    display: block;
     grid-template-rows: 1fr 1fr;
     text-align: start;
     width: fit-content;
@@ -89,12 +89,26 @@
 }
 
 .description {
-    margin-top: 5px;
+    margin-top: 20px;
     width: fit-content;
     align-items: start;
-    color: rgb(253, 253, 254);
-    font-size: 20px;
+    color: rgba(0, 27, 86, 0.9);
+
+    font-size: 18px;
+    font-weight: 400;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.short_description {
+    margin-top: 20px;
+    width: fit-content;
+    align-items: start;
+    color: rgba(0, 27, 86, 0.9);
+
+    font-size: 18px;
+    font-weight: 400;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+
 }
 
 .close {
