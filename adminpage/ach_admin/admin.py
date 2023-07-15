@@ -1,23 +1,25 @@
-
 from sport.admin.site import site
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 from django.forms.models import BaseInlineFormSet
 from datetime import date
+from django_admin_inline_paginator.admin import TabularInlinePaginated
+
 
 admin.site.site_url = 'http://127.0.0.1:8000/ach_admin/'
+
+from accounts.models import User
 
 from .models import Achievement, AchTeacher, AchStudent, AchievementAchStudent
 from .forms import AchievementForm
 
-
-
 from django import forms
 from .models import AchievementAchStudent
 
-
 '''Logic for achievement statuses'''
+
+
 class AchievementAchStudentForm(forms.ModelForm):
     class Meta:
         model = AchievementAchStudent
@@ -31,16 +33,20 @@ class AchievementAchStudentForm(forms.ModelForm):
 
 class AchievementAchStudentAdmin(admin.ModelAdmin):
     form = AchievementAchStudentForm
-    list_display = ('ach_student', 'achievement', 'status', 'is_achieved', 'date_achieved')
+    list_display = ('ach_student', 'achievement', 'status', 'date_achieved')
     list_filter = ('status', 'achievement')
     search_fields = ('ach_student__user__email', 'achievement__title')
+    list_editable = ('status',)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.order_by('-status')
+        return queryset
 
 
 site.register(AchievementAchStudent, AchievementAchStudentAdmin)
 
 """Logic for achievement statuses achstudents"""
-
-
 
 
 class AchievementAchStudentInline(admin.TabularInline):
@@ -67,8 +73,6 @@ Enable many-to-many relationship in admin page for them
 """
 
 
-
-
 class SubscribedStudentFormSet(BaseInlineFormSet):
     """
     Formset for subscribed students in the AchievementSubscribedStudent inline.
@@ -86,16 +90,22 @@ class SubscribedStudentFormSet(BaseInlineFormSet):
         return kwargs
 
 
-class AchievementSubscribedStudent(admin.TabularInline):
+class AchievementSubscribedStudent(TabularInlinePaginated):
     """
     Inline for subscribed students in the Achievement admin page.
     Uses the SubscribedStudentFormSet as the formset.
     """
 
     model = Achievement.students.through
+    raw_id_fields = ['achievement', 'ach_student']
     extra = 1
     show_change_link = False
     formset = SubscribedStudentFormSet
+    autocomplete_fields = ['ach_student', 'achievement']
+    search_fields = ['ach_student__user__email', 'achievement__title']
+    list_filter = ['ach_student', 'achievement']
+    per_page = 10
+    pagination_key = 'subscribed_page'
 
     class Meta:
         verbose_name = "Subscribed student"
@@ -107,8 +117,6 @@ class AchievementSubscribedStudent(admin.TabularInline):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         return queryset.filter(status='subscribed')
-
-    # fill the date_achieved with today date if status is changed to finished
 
 
 class FinishedStudentFormSet(BaseInlineFormSet):
@@ -134,16 +142,23 @@ class FinishedStudentFormSet(BaseInlineFormSet):
         return kwargs
 
 
-class AchievementFinishedStudent(admin.TabularInline):
+class AchievementFinishedStudent(TabularInlinePaginated):
     """
     Inline for finished students in the Achievement admin page.
     Uses the FinishedStudentFormSet as the formset.
     """
+    # template = 'admin/achievement_finished_inline.html'
+    # template = 'ach_admin/achievement_finished_inline.html'
 
     model = Achievement.students.through
     extra = 1
     show_change_link = False
     formset = FinishedStudentFormSet
+    search_fields = ('ach_student__user__email')
+    autocomplete_fields = ['ach_student', 'achievement']
+    per_page = 10
+    pagination_key = 'finished_page'
+    raw_id_fields = ['achievement', 'ach_student']
 
     class Meta:
         verbose_name = "Finished student"
@@ -163,10 +178,11 @@ class AchievementFinishedStudent(admin.TabularInline):
             form.cleaned_data['date_achieved'] = None
 
 
-
-class AchievementCoach(admin.TabularInline):
+class AchievementCoach(TabularInlinePaginated):
     model = Achievement.assigned_coaches.through
     extra = 1
+    autocomplete_fields = ['achievement']
+    per_page = 10
 
     class Meta:
         verbose_name = "Assigned coach"
@@ -174,7 +190,6 @@ class AchievementCoach(admin.TabularInline):
 
     def __str__(self):
         return f"Achievement Coach"
-
 
 
 @admin.register(Achievement)
@@ -230,6 +245,7 @@ class TeacherPage(admin.ModelAdmin):
     model = AchTeacher
     inlines = [AchievementCoach, ]
     search_fields = ['user__email', 'user__first_name', 'user__last_name']
+    # autocomplete_fields = ['user__email']
 
 
 @admin.register(AchStudent)

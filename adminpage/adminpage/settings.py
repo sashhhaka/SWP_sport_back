@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'hijack',
     'hijack.contrib.admin',
     'tinymce',
+    'django_admin_inline_paginator',
 
     'ach_admin.apps.AchAdminConfig',
 
