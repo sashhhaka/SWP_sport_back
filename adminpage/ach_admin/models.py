@@ -5,9 +5,9 @@ from django.conf import settings
 import uuid
 from django.core.exceptions import ValidationError
 import re
-from django.utils.html import mark_safe
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-# base models
 
 def get_achievement_icon_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -95,8 +95,8 @@ class Achievement(models.Model):
 
 
 class AchTeacher(models.Model):
-    user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, default=None)
-    club_name = models.CharField(max_length=200)
+    user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, blank=False)
+    club_name = models.CharField(max_length=200, blank=True, null=True)
     is_admin = models.BooleanField(default=False)
 
     def __str__(self):
@@ -108,7 +108,7 @@ class AchTeacher(models.Model):
 
 
 class AchStudent(models.Model):
-    user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, default=None, limit_choices_to={
+    user = models.OneToOneField('accounts.User', on_delete=models.CASCADE, null=False, limit_choices_to={
         'groups__verbose_name': settings.STUDENT_AUTH_GROUP_VERBOSE_NAME
     }, )
 
@@ -169,7 +169,6 @@ class AchievementAchStudent(models.Model):
 
     is_achieved.boolean = True
     is_achieved.short_description = 'Achieved'
-
 
 
 class CurrentAchievementAchStudent(models.Model):
