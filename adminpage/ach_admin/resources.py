@@ -36,47 +36,6 @@ class AchievementAchStudentResource(resources.ModelResource):
         attribute='status'
     )
 
-    # def before_import_row(self, row, **kwargs):
-    #     # Convert achievement title to achievement object
-    #     achievement_title = row.get('Achievement Title')
-    #     if achievement_title:
-    #         achievement = Achievement.objects.filter(title=achievement_title).first()
-    #         row['Achievement Title'] = achievement
-    #
-    #     # Convert ach_student email to ach_student object
-    #     ach_student_email = row.get('Student Email')
-    #     if ach_student_email:
-    #         ach_student = AchStudent.objects.filter(user__email=ach_student_email).first()
-    #         row['Student Email'] = ach_student
-    #
-    #     # Update the 'status' attribute with the value from the 'Status' column
-    #     status = row.get('Status')
-    #     if status:
-    #         row['Status'] = status
-    #
-    #     # Update the 'date_achieved' attribute with the value from the 'Date Achieved' column
-    #     date_achieved = row.get('Date Achieved')
-    #     if date_achieved:
-    #         row['Date Achieved'] = date_achieved
-    #
-    #     # Check if the relation already exists in the database
-    #     achievement = row.get('Achievement Title')
-    #     ach_student = row.get('Student Email')
-    #     if achievement and ach_student:
-    #         existing_instance = AchievementAchStudent.objects.filter(
-    #             achievement=achievement,
-    #             ach_student=ach_student
-    #         ).first()
-    #         if existing_instance:
-    #             # Update the existing instance with the new values
-    #             for key, value in row.items():
-    #                 setattr(existing_instance, key, value)
-    #             # Save the updated instance
-    #             existing_instance.save()
-    #             # Skip importing the row by returning None
-    #             return None
-
-
     def before_import_row(self, row, **kwargs):
         achievement_title = row.get('Achievement Title')
         ach_student_email = row.get('Student Email')
@@ -117,3 +76,4 @@ class AchievementAchStudentResource(resources.ModelResource):
         export_order = ('achievement_title', 'ach_student_email', 'date_achieved', 'status')
         skip_unchanged = True
         report_skipped = True
+

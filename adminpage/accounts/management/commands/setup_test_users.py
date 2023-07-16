@@ -32,7 +32,7 @@ class Command(BaseCommand):
                                          't.testovich@innopolis.university'])
         count = 0
         for user in users:
-            if random.random() < 0.7:
+            if random.random() < 0.6:
                 user.groups.add(1)
                 user.save()
                 count += 1
@@ -44,7 +44,7 @@ class Command(BaseCommand):
                                          't.testovich@innopolis.university'])
         count = 0
         for user in users:
-            if random.random() < 0.3:
+            if random.random() < 0.4:
                 user.groups.add(2)
                 user.save()
                 count += 1
