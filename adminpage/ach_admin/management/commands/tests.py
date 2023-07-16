@@ -5,9 +5,9 @@ from accounts.models import User
 
 from django.contrib.auth.models import Group
 
-from .models import Achievement, AchTeacher, AchStudent, \
+from ach_admin.models import Achievement, AchTeacher, AchStudent, \
     AchievementAchTeacher, CurrentAchievementAchStudent, FinishedAchievementAchStudent, AchievementAchStudent
-from .views import index
+from ach_admin.views import index
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
 import logging
@@ -42,7 +42,7 @@ class AchievementModelTests(TestCase):
         """
         Set up test environment.
         """
-        image_path = os.path.join(os.path.dirname(__file__), "static/images/img.png")
+        image_path = os.path.join(os.path.dirname(__file__), "../../static/images/img.png")
         image_file = open(image_path, "rb")
         image_data = image_file.read()
         image_file.close()
@@ -181,7 +181,7 @@ class AchievementViewTest(TestCase):
         Set up test environment.
         """
         self.factory = RequestFactory()
-        image_path = os.path.join(os.path.dirname(__file__), "static/images/img.png")
+        image_path = os.path.join(os.path.dirname(__file__), "../../static/images/img.png")
         image_file = open(image_path, "rb")
         image_data = image_file.read()
         image_file.close()
