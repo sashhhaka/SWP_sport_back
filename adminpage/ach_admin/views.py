@@ -5,8 +5,6 @@ import json
 
 from .models import Achievement, AchTeacher
 
-
-# view for achievements
 def index(request):
     try:
         teacher = AchTeacher.objects.get(user=request.user)

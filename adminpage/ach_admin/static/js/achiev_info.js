@@ -14,6 +14,11 @@ $('#exampleModalToggle').on('show.bs.modal', function (event) {
 
 
 
+
+  //update modal field lists of students every time its opened
+  updateSubStudentsList();
+  updateFinStudentsList();
+
   var modal = $(this);
   modal.find('.achiev-img').attr('src', url);
   modal.find('.achievement-name').text(name);

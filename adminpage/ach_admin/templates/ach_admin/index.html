@@ -48,11 +48,10 @@
 
     <div class="right-part">
         <button class="name-button">
-            Name Surname
+            {{ user }}
         </button>
         <button class="club-button">
-            Club name
-
+            {{ club_name }}
         </button>
     </div>
 </div>
@@ -144,7 +143,7 @@
                         </button>
                     </div>
                     <div class="students">
-                        <input class="subscribed_students" type="button" value="> &nbsp Open students"
+                        <input class="subscribed_students" id="input_subscribed_students" type="button" value="> &nbsp Open students"
                                onclick="viewDivS()">
 
                         <div class="students_sub_and_fin" id="students_sub_and_fin" style="display: none;">
@@ -184,7 +183,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="subscribed_students" type="button" value="> &nbsp Open assigned coaches"
+                        <input class="subscribed_students" id="input_ass_coaches" type="button" value="> &nbsp Open assigned coaches"
                                onclick="viewDivC()">
 
                         <div class="ass_coaches_info" id="ass_coaches_info" style="display: none;">
