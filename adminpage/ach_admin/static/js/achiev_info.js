@@ -8,10 +8,17 @@ $('#exampleModalToggle').on('show.bs.modal', function (event) {
   var ass_coaches = button.data('ass_coaches').split('Teacher: ');
   var fin_num = fin_students.length;
   var sub_num = sub_students.length;
+  var short_description = button.data('short_description');
+  var description = button.data('description');
+
+
+
 
   var modal = $(this);
   modal.find('.achiev-img').attr('src', url);
   modal.find('.achievement-name').text(name);
+  modal.find('.short_description').text(short_description)
+  modal.find('.description').text(description)
 
   var v = '';
   for (var i = 1; i < sub_students.length; i++) {

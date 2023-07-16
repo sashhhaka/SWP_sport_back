@@ -30,19 +30,26 @@ class AchievementAchStudentForm(forms.ModelForm):
         if self.instance.status != 'finished':
             self.fields['date_achieved'].required = False
 
+from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
+from .models import AchievementAchStudent
+from .resources import AchievementAchStudentResource
 
-class AchievementAchStudentAdmin(admin.ModelAdmin):
+
+class AchievementAchStudentAdmin(ImportExportModelAdmin):
     form = AchievementAchStudentForm
     list_display = ('ach_student', 'achievement', 'status', 'date_achieved')
     list_filter = ('status', 'achievement')
     search_fields = ('ach_student__user__email', 'achievement__title')
     list_editable = ('status',)
+    # actions = ['make_finished', 'make_subscribed']
+    actions = ['import_achievement_ach_student']
+    resource_class = AchievementAchStudentResource
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         queryset = queryset.order_by('-status')
         return queryset
-
 
 site.register(AchievementAchStudent, AchievementAchStudentAdmin)
 
