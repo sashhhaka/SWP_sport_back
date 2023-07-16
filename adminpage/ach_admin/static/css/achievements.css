@@ -71,7 +71,7 @@ body {
     /*background-color: rgba(100, 150, 150, 0.2);*/
     box-sizing: border-box;
     background-color: rgba(50, 50, 150, 0.15);
-    color: rgba(0, 27, 86, 0.9);
+    color: rgba(13, 2, 56, 1);
     font-weight: 500;
     cursor: pointer;
     font-size: 20px;
@@ -92,7 +92,7 @@ body {
     border-radius: 30px;
     background-color: rgba(50, 50, 140, 0.15);
     margin-top: 20px;
-    border: 2px solid rgba(0, 27, 86, 0.9); /* Add solid border with green color */
+    border: 2px solid rgba(13, 2, 56, 1); /* Add solid border with green color */
     cursor: pointer;
     /*filter: saturate(150%);*/
 }
