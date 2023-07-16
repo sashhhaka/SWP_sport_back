@@ -11,15 +11,17 @@ body {
 .achievements {
     display: flex;
     flex-direction: column;
-    margin-left: 35px;
 }
 
-.achievements-grid {
-  display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 
-  grid-column-gap: 5px; /* Adjust the horizontal gap as desired */
-  grid-row-gap: 3px; /* Adjust the vertical gap as desired */
+
+.achievements-grid {
+    margin-right: 30px;
+    margin-left: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-column-gap: 20px; /* Adjust the horizontal gap as desired */
+    grid-row-gap: 3px; /* Adjust the vertical gap as desired */
 }
 
 
@@ -29,7 +31,6 @@ body {
     position: relative;
     /*background-color: rgba(143, 191, 182, 0.9);*/
     background: rgba(145,203,163, 0.3);
-    border-radius: 5px 5px 5px 5px;
     /*border-radius: 30px;*/
     overflow: hidden;
 }
@@ -40,21 +41,17 @@ body {
     position: relative;
     /*background-color: rgba(143, 191, 182, 0.9);*/
     background: rgba(145,203,163, 0.3);
-    border-radius: 5px 5px 5px 5px;
     /*border-radius: 20px;*/
     /*text-shadow: 0 0 20px rgb(255, 255, 255);*/
     /*border-bottom-color: #d70909;*/
     overflow: hidden;
 }
 
-
-
-
 .new {
     display: flex;
     flex-direction: column;
     margin-left: 35px;
-    width: 405px;
+    width: 400px;
     height: 40px;
     align-content: center;
     justify-content: center;

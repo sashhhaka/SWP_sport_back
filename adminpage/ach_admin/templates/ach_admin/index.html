@@ -113,7 +113,7 @@
 
 <!-- Modal window for achievement info -->
 
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+<div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -141,7 +141,7 @@
 
                         <div class="students_sub_and_fin" id="students_sub_and_fin" style="display: none;">
                             <div>
-                                <form class="search" action="" method="get">
+                                <form class="search" action="" method="get" onkeypress="if(event.keyCode == 13) return false;">
                                     <input class="search_block" id="search_block" name="s"  placeholder="Search..." type="search">
                                     <button class="search_button" type="button" onclick="search_students()">
                                         <img class="search_img" src="../static/images/search.png" alt="">
