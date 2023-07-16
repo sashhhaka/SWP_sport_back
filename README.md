@@ -9,7 +9,7 @@ This part of the project is directed to coaches functionality specifically. Coac
 
 The project is licensed under MIT License (X11 license). See LICENSE file for more details.
 
-! [MIT license] (https://img.shields.io/badge/license-MIT-orange)
+![MIT license](https://img.shields.io/badge/license-MIT-orange)
 
 ## Demo
 (TODO: Demo screenshots)
