@@ -22,6 +22,8 @@ function viewDiv(){
     display1 = document.getElementById("students_sub_and_fin").style.display;
     display2 = document.getElementById("ass_coaches_info").style.display;
     
+    window.location.reload();
+
     if(display1=='grid'){
        document.getElementById("students_sub_and_fin").style.display = "none";
     }

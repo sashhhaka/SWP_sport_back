@@ -17,7 +17,7 @@ $('#exampleModalToggle').on('show.bs.modal', function (event) {
   for (var i = 1; i < sub_students.length; i++) {
       v += '<div class="students_list">' +
       '<p style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">' +
-      '<span style="display: inline-block; width: 80%; vertical-align: middle;">' +
+      '<span style="display: inline-block; width: 80%; word-wrap: break-word; vertical-align: middle;">' +
       sub_students[i].split('>')[0] +
       '</span>' +
       '<input class="button_for_students" id="lbutton' + name + (i - 1).toString() + '" type="checkbox" style="display: inline-block; width: 20%; vertical-align: middle;">' +

@@ -191,7 +191,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     top: 8px;
     right: 8px;
     background-color: rgb(134, 184, 167, 0.5);
-    border: 2px solid rgba(0, 27, 86, 0.8);
+    border: none;
     cursor: pointer;
     justify-content: center;
     align-items: center;
