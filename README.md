@@ -8,6 +8,7 @@ The main idea of Sport Achievements project is to add achievements to Innopolis 
 This part of the project is directed to coaches functionality specifically. Coaches should be able to mark achievements as completed, when a student shows them their progress.
 
 The project is licensed under MIT License (X11 license). See LICENSE file for more details.
+
 ! [MIT license] (https://img.shields.io/badge/license-MIT-orange)
 
 ## Demo
