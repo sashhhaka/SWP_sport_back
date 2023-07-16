@@ -1,6 +1,6 @@
 # [SWP] Sport Achievements: functionality for coaches
 
-![Pipeline](https://gitlab.pg.innopolis.university/sport-achievements-coaches/SWP_sport_back/badges/master/pipeline.svg)
+![Pipeline](https://gitlab.pg.innopolis.university/sport-achievements-coaches/SWP_sport_back/badges/master/pipeline.svg) ![MIT license](https://img.shields.io/badge/license-MIT-orange)
 
 ## Project description
 The main idea of Sport Achievements project is to add achievements to Innopolis University Sport website. 
@@ -9,7 +9,7 @@ This part of the project is directed to coaches functionality specifically. Coac
 
 The project is licensed under MIT License (X11 license). See LICENSE file for more details.
 
-![MIT license](https://img.shields.io/badge/license-MIT-orange)
+
 
 ## Demo
 (TODO: Demo screenshots)
