@@ -12,8 +12,16 @@ The project is licensed under MIT License (X11 license). See LICENSE file for mo
 
 
 ## Demo
-Main Achievement website page
+### Main Achievement website page
 ![image](images/mainpage.png)
+
+### Achievement card
+![image](images/achievement_card.png)
+
+### Admin panel
+![image](images/adminpage.png)
+
+
 
 ## How to use
 The project was developed as a separate Django application (ach_admin) within the adminpage part in the Innopolis Sport website project. The developed application is configured to be launched integrated in Innopolis Sport website.
