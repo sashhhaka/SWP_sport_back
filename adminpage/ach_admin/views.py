@@ -5,15 +5,17 @@ import json
 
 from .models import Achievement, AchTeacher
 
-
-# view for achievements
 def index(request):
     try:
         teacher = AchTeacher.objects.get(user=request.user)
     except AchTeacher.DoesNotExist:
         raise Http404("You do not have access to achievement functionality.")
     achievement_list = Achievement.objects.filter(assigned_coaches__in=[teacher])
-    context = {"achievement_list": achievement_list}
+    context = {"achievement_list": achievement_list, 
+               "teacher": teacher, 
+               'user': request.user,
+               'is_admin': teacher.is_admin,
+               'club_name': teacher.club_name,}
     return render(request, "ach_admin/index.html", context)
 
 
