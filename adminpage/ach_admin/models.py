@@ -21,11 +21,7 @@ def validate_achievement_text(value):
 
 
 # for selection toggle
-class AchievementIcon(models.Model):
-    image = models.ImageField(upload_to='ach_admin/achievements')
 
-    def __str__(self):
-        return self.image.name
 
 
 class Achievement(models.Model):
