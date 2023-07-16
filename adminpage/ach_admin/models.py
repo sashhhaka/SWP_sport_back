@@ -22,8 +22,6 @@ def validate_achievement_text(value):
 
 # for selection toggle
 
-
-
 class Achievement(models.Model):
     title = models.CharField(
         max_length=200,
