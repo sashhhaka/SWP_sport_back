@@ -27,6 +27,36 @@ def move_element(request):
     return HttpResponse("You're voting on question")
 
 
+def sub_students_list(request):
+    data = json.loads(request.body)
+    ids = data.get('ids', '')
+    [object_id, name] = ids.split("/%/")
+    print(object_id,name)
+    var = str(get_object_or_404(Achievement, id=object_id).subscribed_students()).split('AchStudent: ')
+    print("sub = ")
+    print(var)
+    v = ''
+    for i in range(1, len(var)):
+        v += '<div class="students_list">' + '<p style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">' + '<span style="display: inline-block; width: 80%; vertical-align: middle;">' + var[i].split('>')[0] + '</span>' + '<input class="button_for_students" id="lbutton' + name + str(i - 1) + '" type="checkbox" style="display: inline-block; width: 20%; vertical-align: middle;">' + '</p>' + '</div>';
+    if v == '':
+        v = '<p class="students_list" style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">No subscribed students</p>';
+    return HttpResponse(v)
+
+def fin_students_list(request):
+    data = json.loads(request.body)
+    ids = data.get('ids', '')
+    [object_id, name] = ids.split("/%/")
+    print(object_id,name)
+    var = str(get_object_or_404(Achievement, id=object_id).finished_students()).split('AchStudent: ')
+    print("fin = ")
+    print(var)
+    v = ''
+    for i in range(1, len(var)):
+        v += '<div class="students_list">' + '<p style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">' + '<span style="display: inline-block; width: 80%; vertical-align: middle;">' + var[i].split('>')[0] + '</span>' + '<input class="button_for_students" id="rbutton' + name + str(i - 1) + '" type=checkbox checked=checked style="display: inline-block; width: 20%; vertical-align: middle;">' + '</p>' + '</div>';
+    if v == '':
+        v = '<p class="students_list" style="color: black; font-size: 15px; font-family: -apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,\'Helvetica Neue\',Arial,\'Noto Sans\',sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Segoe UI Symbol\',\'Noto Color Emoji\';">No finished students</p>';
+    return HttpResponse(v)
+
 def move_element2(request):
     data = json.loads(request.body)
     ids = data.get('ids', '')
