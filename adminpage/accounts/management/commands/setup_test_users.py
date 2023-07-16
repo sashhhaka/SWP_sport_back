@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from accounts.factories import UserFactory
 from accounts.models import User
 
-NUM_USERS = 1000
+NUM_USERS = 300
 
 
 class Command(BaseCommand):
@@ -32,7 +32,7 @@ class Command(BaseCommand):
                                          't.testovich@innopolis.university'])
         count = 0
         for user in users:
-            if random.random() < 0.6:
+            if random.random() < 0.7:
                 user.groups.add(1)
                 user.save()
                 count += 1
