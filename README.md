@@ -2,6 +2,17 @@
 
 ![Pipeline](https://gitlab.pg.innopolis.university/sport-achievements-coaches/SWP_sport_back/badges/master/pipeline.svg) ![MIT license](https://img.shields.io/badge/license-MIT-orange)
 ![Coverage](https://gitlab.pg.innopolis.university/sport-achievements-coaches/SWP_sport_back/badges/master/coverage.svg?min_good=80&min_acceptable=70&min_medium=50)
+
+
+## Table of Contents
+- [Project description](#project-description)
+- [Demo](#demo)
+- [How to use](#how-to-use)
+- [Features list](#features-list)
+- [Project Installation](#project-installation)
+
+
+
 ## Project description
 The main idea of Sport Achievements project is to add achievements to Innopolis University Sport website.
 
