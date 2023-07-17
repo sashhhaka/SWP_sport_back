@@ -16,8 +16,8 @@ $('#exampleModalToggle').on('show.bs.modal', function (event) {
 
 
   //update modal field lists of students every time its opened
-  updateSubStudentsList();
-  updateFinStudentsList();
+  //updateSubStudentsList();
+  //updateFinStudentsList();
 
   var modal = $(this);
   modal.find('.achiev-img').attr('src', url);
@@ -53,8 +53,8 @@ function subListeners(v){
       var xhr = new XMLHttpRequest();
       xhr.onload = function () {
         if (xhr.status === 200) {
-          updateSubStudentsList();
-          updateFinStudentsList();
+          //updateSubStudentsList();
+          //updateFinStudentsList();
         }
       };
       if (this.checked) {
@@ -70,11 +70,11 @@ function subListeners(v){
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.setRequestHeader('X-CSRFToken', csrftoken); // Set the CSRF token in the request header
       xhr.send(JSON.stringify({ ids: id + '/%/' + document.getElementById("l" + name + (index - 1).toString()).innerHTML }));
-      document.getElementById('l' + name + (index - 1).toString()).setAttribute('id', 'r' + name + (fin_num - 2).toString());
+      //document.getElementById('l' + name + (index - 1).toString()).setAttribute('id', 'r' + name + (fin_num - 2).toString());
 
 if (index < sub_num){
 for (var j = index; j < sub_num;j++){
-document.getElementById('l' + name + (j).toString()).setAttribute('id','l' + name + (j-1).toString());
+//document.getElementById('l' + name + (j).toString()).setAttribute('id','l' + name + (j-1).toString());
 
 }
 }
@@ -119,8 +119,8 @@ if (v !== '') {
       var xhr = new XMLHttpRequest();
       xhr.onload = function () {
         if (xhr.status === 200) {
-          updateSubStudentsList();
-          updateFinStudentsList();
+          //updateSubStudentsList();
+          //updateFinStudentsList();
         }
       };
 
@@ -139,11 +139,11 @@ if (v !== '') {
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.setRequestHeader('X-CSRFToken', csrftoken); // Set the CSRF token in the request header
       xhr.send(JSON.stringify({ ids: id + '/%/' + document.getElementById("r" + name + (index - 1).toString()).innerHTML }));
-      document.getElementById('r' + name + (index - 1).toString()).setAttribute('id', 'l' + name + (sub_num - 2).toString());
+      //document.getElementById('r' + name + (index - 1).toString()).setAttribute('id', 'l' + name + (sub_num - 2).toString());
 
 if (index < fin_num){
 for (var j = index; j < fin_num;j++){
-document.getElementById('r' + name + (j).toString()).setAttribute('id','r' + name + (j-1).toString());
+//document.getElementById('r' + name + (j).toString()).setAttribute('id','r' + name + (j-1).toString());
 
 }
 }
