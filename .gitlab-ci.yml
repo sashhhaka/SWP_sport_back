@@ -16,6 +16,7 @@ build-job:
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py makemigrations
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate auth
     - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate
+  coverage: '/TOTAL.*\s+(\d+%)$/'
 
 unit-test-job:
   stage: test
