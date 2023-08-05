@@ -1,0 +1,44 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml build
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml up -d
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel bash -c "while !</dev/tcp/db/5432; do sleep 1; done;"
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py makemigrations
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate auth
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate
+
+
+unit-test-job:
+  stage: test
+  script:
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml build
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml up -d
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel bash -c "while !</dev/tcp/db/5432; do sleep 1; done;"
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py makemigrations
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate auth
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python manage.py migrate
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel python3 -m pip install coverage
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage run manage.py test ach_admin
+    - docker-compose -p test_sport -f compose/docker-compose-test.yml exec -T adminpanel coverage report --include=ach_admin/* -m
+  coverage: '/TOTAL\s+\d+\s+\d+\s+(\d+%)$/'
+
+lint-test-job:
+  stage: test
+  image: registry.gitlab.com/pipeline-components/pylint:latest
+  script:
+    - pylint --exit-zero --load-plugins=pylint_gitlab --output-format=gitlab-codeclimate:codeclimate.json **/*.py
+  artifacts:
+    reports:
+      codequality: codeclimate.json
+    when: always
+    expire_in: 30 days

@@ -1,3 +1,5 @@
+
+
 """
 Django settings for adminpage project.
 
@@ -92,9 +94,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv_boolean("DEBUG")
+#DEBUG = getenv_boolean("DEBUG")
+DEBUG = True
 PROJECT_ROOT = "/src/"
-ALLOWED_HOSTS = [HOSTNAME, 'adminpanel']
+ALLOWED_HOSTS = [HOSTNAME, 'adminpanel', '89.223.121.66', 'localhost']
 
 if DEBUG:
     ALLOWED_HOSTS.append('localhost')
@@ -131,6 +134,11 @@ INSTALLED_APPS = [
     'hijack',
     'hijack.contrib.admin',
     'tinymce',
+    'django_admin_inline_paginator',
+
+    'ach_admin.apps.AchAdminConfig',
+
+
 ]
 
 MIDDLEWARE = [
@@ -271,6 +279,11 @@ USE_TZ = True
 
 STATIC_ROOT = '/static/'
 
+#STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
 if DEBUG:
     STATIC_URL = f'/{PREFIX}static/'
 else:
@@ -278,6 +291,10 @@ else:
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/uploaded_media'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# paths for achievements
+
 
 # Sendfile settings
 SENDFILE_BACKEND = "django_sendfile.backends.nginx"

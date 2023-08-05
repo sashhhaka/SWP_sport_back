@@ -17,7 +17,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from sport.admin.site import site
+from django import contrib
 
+from django.contrib import admin
 # TODO: remove when not needed
 # from django.http import JsonResponse
 # def show(request):
@@ -39,12 +41,16 @@ urlpatterns = [
         path("", include("sport.urls")),
         # only /metrics
         path('', include('django_prometheus.urls')),
-        path('admin/', site.urls),
+        #path('first_admin/', site.urls),
         path('oauth2/', include('django_auth_adfs.urls')),
 
         path("api/", include("api.urls")),
         path("media/", include('media.urls')),
         path('hijack/', include('hijack.urls')),
+
+        path("ach_admin/", include("ach_admin.urls")),
+        path("admin/", site.urls)
+
     ]))
 ] \
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

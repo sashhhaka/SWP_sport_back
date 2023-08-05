@@ -1,0 +1,10 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block object-tools-items %}
+    {{ block.super }}
+    <a href="/ach_admin/">
+        All achievements
+            <img src="{% static 'images/trophy.png' %}" width="16" height="16">
+    </a>
+{% endblock %}

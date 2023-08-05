@@ -1,0 +1,242 @@
+* {
+    box-sizing: border-box;
+}
+
+.students_sub_and_fin {
+    grid-template-columns: 400px 400px;
+}
+
+.btn btn-primary {
+    background: none;
+}
+
+.modal-content {
+    background-color: transparent!important;
+    border: none!important;
+}
+
+.modal-body {
+    padding: 0!important;
+}
+
+.ass_coaches_window,
+.fin_students_window,
+.sub_students_window {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ass_coaches_window.show,
+.fin_students_window.show,
+.sub_students_window.show {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.ass_coaches_info {
+    display: grid;
+    width: 350px;
+    height: fit-content;
+    text-align: start;
+    border-radius: 30px;
+    background: none;
+    border: none;
+    padding: 0px 0px 0px 30px;
+}
+
+.fin_students_info,
+.sub_students_info {
+    display: grid;
+    width: 350px;
+    height: fit-content;
+    padding: 30px 0px 30px 30px;
+    text-align: start;
+    border-radius: 30px;
+    background: none;
+    border: none;
+}
+
+
+
+.available_ass_coaches,
+.available_fin_students,
+.available_sub_students {
+    width: fit-content;
+    align-items: start;
+    color: white;
+    font-size: 20px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.add_ass_coaches,
+.add_fin_students,
+.add_sub_students {
+    width: fit-content;
+    align-items: start;
+    justify-content: start;
+    padding: 0 0 0 0;
+    background: none;
+    border: none;
+    color: black;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.add_ass_coaches:hover,
+.add_fin_students:hover,
+.add_sub_students:hover {
+    opacity: 0.7;
+}
+
+.available_fin_students_block,
+.available_sub_students_block {
+    width: fit-content;
+
+}
+
+.available_ass_coaches_list,
+.available_fin_students_list,
+.available_sub_students_list {
+    margin-top: 30px;
+    padding: 15px 5px 15px 25px;
+    background-color: rgb(134, 184, 167, 0.5);
+    border-radius: 30px;
+    border: 2px solid rgba(0, 27, 86, 0.8);
+    height: fit-content;
+    width: 350px;
+    height: 250px;
+    align-items: start;
+    overflow-y: scroll;
+}
+
+
+.available_ass_coaches_list::-webkit-scrollbar,
+.available_fin_students_list::-webkit-scrollbar,
+.available_sub_students_list::-webkit-scrollbar {
+    border-radius: 30px;
+    width: 10px;
+    background-color: none;
+}
+
+.available_ass_coaches_list::-webkit-scrollbar-thumb,
+.available_fin_students_list::-webkit-scrollbar-thumb,
+.available_sub_students_list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(145, 196, 146);
+    border: 2px solid rgba(0, 27, 86, 0.8)
+}
+
+.available_ass_coaches_list::-webkit-scrollbar-track,
+.available_fin_students_list::-webkit-scrollbar-track,
+.available_sub_students_list::-webkit-scrollbar-track {
+    border-radius: 10px;
+    height: 80%;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+
+.available_ass_coaches_list p,
+.available_fin_students_list p,
+.available_sub_students_list p {
+    color: black;
+    font-size: 15px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.ass_coaches_close,
+.fin_students_close,
+.sub_students_close {
+    text-align: end;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.ass_coaches_close:hover,
+.fin_students_close:hover,
+.sub_students_close:hover {
+    opacity: 0.7;
+}
+
+.students-list {
+    padding-left: 0px;
+}
+
+input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+.button_for_send_students {    background-color: rgb(134, 184, 167, 0.5);
+    border-radius: 30px;
+    border: 2px solid rgba(0, 27, 86, 0.8);
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+}
+.button_for_send_students:hover {
+    opacity: 0.7;
+}
+.search {
+    position: absolute;
+    width: 300px;
+    margin-left: 30px;
+}
+.search_block,
+.search_button {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+}
+.search_block {
+    width: 100%;
+    height: 42px;
+    background-color: rgb(134, 184, 167, 0.5);
+    border-radius: 30px;
+    border: 2px solid rgba(0, 27, 86, 0.8);
+    padding-left: 15px;
+}
+.search_button {
+    margin-right: 10px;
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    padding: 0px 0px 0px 0px;
+    top: 8px;
+    right: 8px;
+    background-color: rgb(134, 184, 167, 0.5);
+    border: none;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+.search_img {
+    height: 21px;
+    margin-bottom: 5px;
+    opacity: 0.7;
+}
+.search_img:hover {
+    opacity: 0.4;
+}
+
+.students_sub_and_fin {
+    margin-top: 10px;
+    grid-template-rows: 30px 1fr;
+    grid-template-columns: 400px 400px;
+}
+

@@ -1,0 +1,87 @@
+.menu {
+    /*background-color: rgba(0, 17, 94, 0.96);*/
+    background-color: rgba(0,13,70, 0.9);
+    background-color: rgb(9, 47, 87);
+    display: flex;
+    align-items: center;
+    /*justify-content:space-around;*/
+    justify-content: space-between;
+    height: fit-content;
+    position: fixed;
+    min-width: 1080px;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.right-part {
+    display: flex;
+    justify-content: center;
+    margin-right: 100px;
+}
+.left-part {
+    display: flex;
+    justify-content: center;
+}
+.exit-logo {
+    margin-left: 50px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.Inno_Logo {
+    width: 50px;
+    height: auto;
+    margin: auto;
+}
+
+
+
+.logo,
+.achievements-button,
+.events-button,
+.leave-admin-page-button,
+.name-button,
+.club-button,
+.events-button-enabled {
+    vertical-align: center;
+    background: none;
+    box-sizing: border-box;
+    border: none;
+    height: 53px;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 30px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.achievements-button,
+.events-button,
+.events-button-enabled {
+    /* ... existing styles ... */
+    flex-shrink: 0; /* Add this line to prevent shrinking */
+}
+
+
+.achievements-button:hover {
+    opacity: 0.8;
+}
+.events-button:hover {
+    opacity: 0.8;
+}
+
+.events-button-enabled:hover {
+    opacity: 0.8;
+}
+.leave-admin-page-button:hover {
+    opacity: 0.8;
+}
+.name-button:hover {
+    opacity: 0.8;
+}
+.club-button:hover {
+    opacity: 0.8;
+}
+.logo {
+    margin-left: 60px;
+}

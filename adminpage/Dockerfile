@@ -11,3 +11,5 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 RUN pip install -r /src/requirements.txt
 COPY . /src
+COPY ./media /app/media
+
